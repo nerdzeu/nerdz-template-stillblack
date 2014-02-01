@@ -1,3 +1,6 @@
+A simple Template for nerdz.eu based on the default Nerdz Black Template
+
+
 FILES/DIRECTORY ORGANIZATION
 ==============================
 
