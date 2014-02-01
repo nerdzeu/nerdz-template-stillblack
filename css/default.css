@@ -1,0 +1,712 @@
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Segoe UI"), local("Open Sans"), local("OpenSans"), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/K88pR3goAWT7BTt32Z01mz8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+
+@font-face {
+    font-family: "icomoon";
+    src: url("../fonts/icomoon.eot") format('embedded-opentype'), url("../fonts/icomoon.woff") format("woff") ,url("../fonts/icomoon.ttf")  format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+hr {
+    border: 1px solid #999;
+}
+
+#site_title
+{
+    color: #000;
+    margin: 0 auto 1.5% auto;
+    width: 100%;
+    background-color: #AFAFAF;
+    display: block;
+    position: fixed;
+    box-shadow : 0 0 10px #222;
+    height: 40px;
+    z-index: 200;
+}
+
+#site_title a:visited, #site_title a:active, #site_title a:link, #footer_main a:visited, #footer_main a:active, #footer_main a:link
+{
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#hp-title:hover {
+    cursor: pointer;
+}
+
+#title_left
+{
+    display: inline;
+    float: left;
+    font-size: 200%;
+    margin-left: 10px;
+}
+
+#left_col
+{
+    float: left;
+    width: 12.5%;
+    margin-right: 1%;
+    display: inline;
+    overflow-x: hidden;
+}
+
+#center_col
+{
+    width: 71%;
+    float:left;
+    display: inline;
+    padding-left: 0.5px;
+    padding-right: 0.5px;
+    font-size: 105%;
+}
+
+#right_col
+{
+    width: 12.5%;
+    float: left;
+    display: inline;
+    margin-left: 1%;
+}
+
+#left_col ul, #right_col ul
+{
+    list-style-type: square;
+    list-style-position: inside;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-top: 2px;
+}
+
+#footer_main
+{
+    background-color: #AFAFAF;
+    text-align: center;
+    border-top: 1px #000 solid;
+    bottom: 0px;
+    clear: both;
+    display: block;
+    height: 24px;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
+}
+
+#footer_left
+{
+    position: fixed;
+    display: inline;
+    bottom: 2px;
+    left: 2px;
+    text-align: left;
+}
+
+.nerdz_message > div.compressed
+{
+    max-height: 200px;
+    overflow: hidden;
+    width: auto;
+}
+
+#notify_list
+{
+    position: fixed;
+    display: block;
+    top: 35px;
+    left: 175px;
+    background-color: #000;
+    z-index: 1000;
+}
+
+#notify_list div {
+    width: 100%;
+    margin: 0px;
+}
+
+#share,#bug_bar
+{
+    position: fixed;
+    bottom:0px;
+    right: 0px;
+    background-color: #FFF;
+    padding-top: 4px;
+    padding-bottom: 1px;
+    color: #000;
+    margin: 0%;
+    border-left: solid 1.5px #000;
+    height: 19px;
+    width: 60px;
+    text-align:center;
+}
+
+#share
+{
+    right: 61px;
+    font-size: 90%;
+}
+
+#bug_bar
+{
+    left: 0px;
+    width: 30px;
+    border: 0px;
+}
+
+#main
+{
+    margin: auto;
+    width: 98%;
+    margin-right: 0.2%;
+    word-wrap: break-word;
+}
+
+#gotopm
+{
+    float:left;
+    margin-top: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-style: italic;
+    width:20px;
+}
+
+#postlist
+{
+    margin-bottom: 4%;
+}
+
+#rightmenu
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height:310px;
+}
+
+#leftmenu li, #rightmenu li
+{
+    margin-top: 5%;
+}
+
+#fast_nerdz
+{
+    margin-bottom: 25px;
+}
+
+a:hover, a:visited, a:active, a:link, .atilda
+{
+    color: #2370B6;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+label, .qu_ico, .imglocked, .imgunlocked, .lurk, .unlurk, .selectlang, .projlang, .more, .bookmark, .unbookmark
+{
+    cursor: pointer;
+}
+
+input, option, select, .page th
+{
+    border: 0.5px #000 solid;
+    text-align: left;
+    background-color: #FFF; 
+    color: #000;
+    border-radius: 2.5px;
+}
+
+.page th
+{
+    padding-left: 1%;
+    padding-right: 1%;
+    border: 0.5px #000 solid;
+    font-weight: bold;
+    white-space: nowrap;
+    word-wrap: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+body
+{
+    background-color: #000;
+    color: #ddd;
+    font-size: 90%;
+    font-family: 'Segoe UI_','Open Sans',Verdana,Arial,Helvetica,sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    z-index: 0;
+}
+
+img
+{
+    border: 0px none;
+}
+
+iframe
+{
+    margin: auto;
+    overflow: hidden;
+}
+
+html, #body
+{
+    width: 100%;
+    height: 100%;
+}
+
+.box
+{
+    margin-top:10px;
+    padding: 3px;
+    background-color: #222;
+}
+
+.more
+{
+    position: relative;
+    top: -12px;
+    margin-bottom: -10px;
+    padding-bottom: 5px;
+    text-align: center;
+    box-shadow: 0 0 25px #000;
+}
+
+.nitem
+{
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.page
+{
+    width: 99%;
+    margin: auto;
+}
+
+.page table
+{
+    margin: auto;
+    width: 100%;
+}
+
+.page .intable
+{
+    margin-top: 3%;
+    width: 100%;
+    margin-bottom: 3%;
+}
+
+.page th
+{
+    width: 10%;
+    text-align: center;
+}
+
+.nerdz_message, .news
+{
+    width: auto;
+    background-color: #222;
+    border-radius: 2.5px;
+    font-size: 100%;
+    overflow: hidden;
+    padding: 2px;
+    border: 1px #808080 solid;
+    word-wrap: break-word;
+    margin-bottom: 10px;
+}
+
+.news
+{
+    background-color: #DDD;
+    color: #000;
+    clear: left;
+}
+
+
+.nerdz_comments br, .nerdz_message br
+{
+    clear: both;
+}
+
+.nerdz_date
+{
+    float:right;
+    margin-right: 2px;
+    font-size: 85%;
+}
+
+.nerdz_from
+{
+    margin-bottom: 4px;
+    font-size: 110%;
+}
+
+.nerdz_truncate
+{
+    background-color: #FFF;
+    text-align:center;
+    width:132px;
+    color:#000;
+    font-weight: bold;
+}
+
+.qu_main
+{
+    width: auto;
+    border: solid #808080 1px;
+    overflow: hidden;
+    padding: 5px;
+    margin-top: 2px;
+    margin-left: 1%;
+    margin-right: 5px !important;
+}
+
+.qu_user
+{
+
+}
+
+.img_frame, .yt_frame
+{
+  clear:both;
+  text-align:center;
+  overflow:hidden;
+  display: block !important;
+  background-color: transparent; 
+  cursor: pointer; 
+  width: 132px;
+  height: 132px;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+.img_frame span, .yt_frame span
+{
+  display: none;
+}
+
+.img_frame img, .yt_frame img
+{
+    display: block;
+    max-height:115px;
+    max-width:130px;
+    margin: auto;
+}
+
+.img_frame-extended
+{
+  display: block;
+  width: auto;
+  height: auto;
+  border: none;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.img_frame.img_frame-extended img {
+  float: left;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  max-width:100%;
+  margin-top: 0px !important;
+}
+.img_frame-extended span
+{
+  display: none;
+}
+.error
+{
+    color: #FF0000;
+    font-size: 80%;
+    font-weight: bold;
+    margin-top: 13px;
+}
+
+.small
+{
+    font-size: 75%;
+}
+
+.light
+{
+    color: #777;
+    padding-bottom: 2px;
+}
+
+.bold
+{
+    font-weight:bold;
+}
+
+.curtext
+{
+    font-style: italic;
+}
+
+.nerdz-code-wrapper {
+    background-color: #000;
+    margin-right: 7px !important;
+    width: auto;
+}
+
+
+pre
+{
+    font-size: 12px;
+    margin-top: 0;
+}
+
+.nerdz-code-title
+{
+    height: auto;
+    padding-top: 1px;
+    padding-left: 2px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.nerdz-code-title:first-letter
+{
+    text-transform: uppercase;
+}
+
+.prettyprint
+{
+    padding: 3px 3px 3px 3px;
+}
+
+textarea {
+    border: 1px solid #808080;
+}
+
+#topbox {
+    width: 100%;
+    height: 75px;
+}
+
+button, input[type=submit] {
+    padding-left: 1%;
+    padding-right: 1%;
+    border: 1px solid #808080;
+    height: 30px;
+    font-weight: 900;
+    background-color: #fff;
+}
+
+button:active, input[type=submit]:active, .profilebutton:active {
+    background-color: #222;
+    color: #DDD;
+    outline: 0;
+}
+
+
+
+.title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    box-shadow: 0px 0px 5px #888;
+    background-color: #000;
+    text-align: center;
+    font-size: 110%;
+    display: block;
+}
+
+.title a, .title a:visited {
+    color: #fff;
+    text-align: center;
+}
+
+.nerdz_comments {
+    padding-top: 5px;
+    padding-right: 8px;
+    padding-left: 4px;
+    padding-bottom: 6px;
+    background-color: #292929;
+    margin-left: 35px;
+    margin-bottom: 10px;
+    color: #CCC;
+    word-wrap: break-word;
+}
+
+.commentslist {
+    width: 80%;
+    margin-top:1%;
+    margin-bottom:15px;
+    margin-left: 3%;
+}
+
+.symbols {
+    font-family: "icomoon";
+}
+
+#head-right {
+    float: right;
+}
+
+#head-left {
+    float: left;
+    margin-left: 40px;
+}
+
+
+.headlink {
+    width: 60px;
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 25px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+}
+
+.headlink:hover {
+    font-size: 29px;
+    padding-top:0px;
+    color: #2370B6;
+}
+
+#pmcounter, #notifycounter {
+    font-size: 15px;
+    margin-left: 2px;
+}
+
+#search {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin-left: -10em;
+    width: 20em;
+    border-radius: 0px;
+    border: 1px solid #999;
+}
+
+#search:focus {
+    border: 1px solid #444;
+    outline: 0;
+}
+
+.light-text, .light-text a, .light-text a:visited  {
+    color: #999;
+}
+
+.light-text a:hover, .light-text a:active, .qu_user a:hover, .qu_user a:active, .qu_user a, .qu_user a:visited, .nerdzoptions a:hover, .nerdzoptions a:active {
+    color: #2370B6;
+}
+
+.nerdzoptions {
+    margin-left: 2.5px;
+    margin-right: 2.5px;
+    display: inline-block;
+    float: right;
+    font-size: 110%;
+}
+
+#showinfo {
+    cursor: pointer;
+}
+
+#infobox {
+    display: none;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.delcomment {
+    margin-right: -7px;
+}
+
+.nerdz-code-title:after {
+    content: "";
+    float: left;
+    font-family: 'icomoon';
+    font-weight: lighter;
+}
+
+.yt_frame:before {
+    content: "";
+    font-family: 'icomoon';
+    position: absolute;
+    top: 0px;
+    left:0px;
+    width: 130px;
+    height: 130px;
+    background-color: transparent;
+    line-height: 120px;
+    text-align: center;
+    font-size: 40px;
+    color: #cc181e;
+    text-shadow: 0 0 3px #222;
+}
+
+.quote span {
+    display: none;
+}
+
+.quote:before, .qu_user:before {
+    content: "";
+    font-family: 'icomoon';
+    float: left;
+    margin-right: 4px;
+}
+
+.quote {
+    border: 1.5px solid #000;
+    margin: 10px;
+    margin-top: 12px;
+    background-color: #888;
+    color: #222;
+    padding: 2px;
+}
+
+.spoiler hr {
+    display: none;
+}
+
+.spoiler {
+    border: 1.5px solid #000;
+    margin: 10px;
+    margin-top: 12px;
+    background-color: #888;
+    color: #222;
+    padding: 2px;
+}
+
+.spoiler:before {
+    content: "";
+    font-family: 'icomoon';
+    float: left;
+}
+
+.buttons {
+    font-weight: normal !important;
+    height: 25px;
+    border: 1px solid #AAA !important;
+    cursor: pointer;
+    word-wrap: break-word !important;
+    border-radius: 0px !important;
+    background-color: #000 !important;
+    color: #CCC !important;
+}
+
+.buttons:hover {
+    color: #33ADFF !important;
+    background-color: #333 !important;
+}
