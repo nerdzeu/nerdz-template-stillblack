@@ -391,10 +391,6 @@ html, #body
     left: 0px;
 }
 
-.yt_frame {
-    border: 2px solid #cc181e;
-}
-
 .img_frame span, .yt_frame span
 {
   display: none;
