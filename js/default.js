@@ -8,11 +8,11 @@ $(document).ready(function() {
         $('#commit').html("<a id='github' href='https://github.com/nerdzeu/nerdz.eu/commit/"+ Nversion+"' target='wowsoversion'>"+Nversion+"</a>" )
     // load the prettyprinter
     $('#showinfo').on('click', function () {
-        var box= $('#infobox');
-        if (box.css('display') == 'none')
-            box.css('display', 'inline-block')
-        else
-            box.css('display', 'none')
+        $('#infobox').slideToggle();        
+    })
+
+    $('#bug_title').on('click', function () {
+        $('#bugs').slideToggle();        
     })
 
     $('.nerdz-code-title').after("<span class='symbols' style='float: left'></span>");
@@ -60,7 +60,6 @@ $(document).ready(function() {
                     location.href = href;
                 }
             });
-
         }
         $(this).html(isNaN(nold) ? old : '0');
     });
@@ -329,6 +328,47 @@ $(document).ready(function() {
         else
         {
             refto.html('');
+        }
+    });
+
+    plist.on('click', ".vote", function() {
+        var curr = $(this),
+          cont = curr.parent(),
+          tnum = cont.parent().children(".thumbs-counter"),
+          func = "thumbs",
+          obj = { hpid: cont.data("refto") };
+
+        if(cont.hasClass("comment"))  {
+            obj = { hcid: cont.data("refto") };
+            func = "cthumbs";
+        }
+          
+        if(curr.hasClass("voted")) { 
+            N.json[plist.data ('type')][func]($.extend(obj,{thumb: 0}), function(r) {
+                curr.removeClass("voted");
+                var votes = parseInt(r.message);
+                tnum.attr("class","thumbs-counter").text(votes);
+                if(votes !== 0) {
+                    tnum.addClass(votes>0?"nerdz_thumbsNumPos":"nerdz_thumbsNumNeg");
+                }
+                if(votes>0) {
+                    tnum.text("+"+tnum.text());
+                }
+              });
+        }
+        else {
+            N.json[plist.data ('type')][func]($.extend(obj,{ thumb: curr.hasClass("up") ? 1: -1 }), function(r) {
+                cont.children(".voted").removeClass("voted");
+                curr.addClass("voted");
+                var votes = parseInt(r.message);
+                tnum.attr("class","thumbs-counter").text(votes);
+                if(votes !== 0) {
+                    tnum.addClass(votes>0?"nerdz_thumbsNumPos":"nerdz_thumbsNumNeg");
+                }
+                if(votes>0) {
+                    tnum.text("+"+tnum.text());
+                }
+             });
         }
     });
 

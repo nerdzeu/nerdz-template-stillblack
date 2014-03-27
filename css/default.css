@@ -701,3 +701,29 @@ button:active, input[type=submit]:active, .profilebutton:active {
     color: #33ADFF !important;
     background-color: #333 !important;
 }
+
+.nerdz_thumbs {
+    display: inline;
+}
+
+
+.separator {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.vote.up.voted, .nerdz_thumbsNumPos {
+    color: #00A300;
+}
+
+.vote.down.voted, .nerdz_thumbsNumNeg {
+    color: #FF3300;
+}
+
+.vote {
+    cursor: pointer;
+}
+
+.vote.down {
+    margin-bottom: -5px;
+}
