@@ -8,13 +8,13 @@
         {/if}
         <span class="nerdz_date">
             <time>{$datetime_n}</time>
-            <span class="separator">|</span>
-                <span class='thumbs-counter{if="$thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$thumbs_n > 0"}+{/if}{$thumbs_n}</span>
+            <span class="thumbs separator">|</span>
+            <span class='thumbs thumbs-counter{if="$thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$thumbs_n > 0"}+{/if}{$thumbs_n}</span>
+            <div class="thumbs nerdz_thumbs" data-refto="{$hpid_n}">
               &nbsp;&nbsp;
-              <div class="nerdz_thumbs" data-refto="{$hpid_n}">
-                <i class='vote up{if="$uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
-                <i class='vote down{if="$uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
-              </div>
+              <i class='vote up{if="$uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <i class='vote down{if="$uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+            </div>
         </span>
     </div>
     <div class="{if="$news_b"}news{else}nerdz_message{/if}">
