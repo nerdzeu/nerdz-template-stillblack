@@ -9,11 +9,11 @@
         <span class="nerdz_date">
             <time>{$datetime_n}</time>
             <span class="separator">|</span>
-                <span class='thumbs-counter{if="$value.thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$value.thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$value.thumbs_n > 0"}+{/if}{$value.thumbs_n}</span>
+                <span class='thumbs-counter{if="$thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$thumbs_n > 0"}+{/if}{$thumbs_n}</span>
               &nbsp;&nbsp;
-              <div class="nerdz_thumbs" data-refto="{$value.hpid_n}">
-                <i class='vote up{if="$value.uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
-                <i class='vote down{if="$value.uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <div class="nerdz_thumbs" data-refto="{$hpid_n}">
+                <i class='vote up{if="$uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+                <i class='vote down{if="$uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
               </div>
         </span>
     </div>
