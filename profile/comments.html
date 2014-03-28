@@ -22,6 +22,13 @@
                 {/if}
             {/if}
             <a title="quote" class="qu_ico symbols nerdzoptions" data-hcid="{$value.hcid_n}" data-type="u" data-refto="commentto{$value.hpid_n}" style="font-size: 100%; margin-left: 5px; padding-top: 2px; vertical-align: middle"></a>
+            <span class="thumbs separator">|</span>
+            <span class='thumbs thumbs-counter{if="$value.thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$value.thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$value.thumbs_n > 0"}+{/if}{$value.thumbs_n}</span>
+            <div class="thumbs comment nerdz_thumbs" data-refto="{$value.hcid_n}">
+              &nbsp;&nbsp;
+              <i class='vote up{if="$value.uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <i class='vote down{if="$value.uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+            </div>
         </span>
     </div>
     <div class="nerdz_comments" style="width:auto">
