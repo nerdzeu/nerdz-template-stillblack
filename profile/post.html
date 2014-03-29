@@ -12,8 +12,8 @@
             <span class='thumbs thumbs-counter{if="$thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$value.thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$thumbs_n > 0"}+{/if}{$thumbs_n}</span>
             <div class="thumbs comment nerdz_thumbs" data-refto="{$hpid_n}">
               &nbsp;&nbsp;
-              <i class='vote up{if="$uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
-              <i class='vote down{if="$uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <i class='vote up{if="$uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <i class='vote down{if="$uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
             </div>
         </span>
     </div>
@@ -25,7 +25,7 @@
             {$message_n}
         </div>
         <div style="clear:both; padding-top: 5px" class="small light-text">
-            <a href="/{$to4link_n}{$hpid_n}" class="symbols" title="Link" style="margin-left: 3px"></a>&nbsp;&nbsp;
+            <a href="/{$to4link_n}{$hpid_n}" class="Link symbols" title="Link" style="margin-left: 3px"></a>&nbsp;&nbsp;
             <a class="showcomments" style="width:60%" data-hpid="{$hpid_n}" data-refto="commentlist{$hpid_n}">
                 {$comments} ({$postcomments_n})
             </a>
@@ -33,34 +33,34 @@
                 <span style="float:right">
             {/if}
             {if="$canremovepost_b"}
-                <a class="delpost symbols nerdzoptions" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" title="{$remove}"></a>
+                <a class="delpost symbols nerdzoptions" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" title="{$remove}"></a>
             {/if}
             {if="$canremovepost_b && $caneditpost_b"} | {/if}
             {if="$caneditpost_b"}
-                <a class="editpost symbols nerdzoptions" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" title="{$edit}"></a>
+                <a class="editpost symbols nerdzoptions" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" title="{$edit}"></a>
             {/if}
             {if="$canremovepost_b || $caneditpost_b"}
             </span>
             {/if}
             {if="$canshowlock_b"}
                 {if="$lock_b"}
-                    <a class="imglocked symbols nerdzoptions" data-hpid="{$hpid_n}" title="{$recv_notify}"></a>
+                    <a class="imglocked symbols nerdzoptions" data-hpid="{$hpid_n}" title="{$recv_notify}"></a>
                 {else}
-                    <a class="imgunlocked symbols nerdzoptions" data-hpid="{$hpid_n}" title="{$recv_notify}"></a>
+                    <a class="imgunlocked symbols nerdzoptions" data-hpid="{$hpid_n}" title="{$recv_notify}"></a>
                 {/if}
             {/if}
             {if="$canshowlurk_b"}
                 {if="$lurk_b"}
-                    <a class="unlurk symbols nerdzoptions" data-hpid="{$hpid_n}" title="Unlurk"></a>  
+                    <a class="unlurk symbols nerdzoptions" data-hpid="{$hpid_n}" title="Unlurk"></a>  
                 {else}
-                    <a class="lurk symbols nerdzoptions" data-hpid="{$hpid_n}" title="Lurk"></a>
+                    <a class="lurk symbols nerdzoptions" data-hpid="{$hpid_n}" title="Lurk"></a>
                 {/if}
             {/if}
             {if="$canshowbookmark_b"}
                 {if="$bookmark_b"}
-                    <a class="unbookmark symbols nerdzoptions" data-hpid="{$hpid_n}" title="Unbookmark" onclick=""></a>   
+                    <a class="unbookmark symbols nerdzoptions" data-hpid="{$hpid_n}" title="Unbookmark" onclick=""></a>   
                 {else}
-                    <a class="bookmark symbols nerdzoptions" data-hpid="{$hpid_n}" title="Bookmark" onclick=""></a>
+                    <a class="bookmark symbols nerdzoptions" data-hpid="{$hpid_n}" title="Bookmark" onclick=""></a>
                 {/if}
             {/if}
         </div>

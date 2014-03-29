@@ -507,7 +507,6 @@ $(document).ready(function() {
         var tog = function(d) {
             if(d.status == 'ok') {
                 me.attr('class','imgunlocked symbols nerdzoptions');
-                me.html("");
                 me.attr('title', d.message);
             }
         }
@@ -525,7 +524,6 @@ $(document).ready(function() {
         var tog = function(d) {
             if(d.status == 'ok') {
                 me.attr('class','imglocked symbols nerdzoptions');
-                me.html("");
                 me.attr('title',d.message);
             }
         }
@@ -543,7 +541,6 @@ $(document).ready(function() {
         var tog = function(d) {
             if(d.status == 'ok') {
                 me.attr('class','unlurk symbols nerdzoptions');
-                me.html("");
                 me.attr('title',d.message);
             }
         }
@@ -557,7 +554,6 @@ $(document).ready(function() {
         var tog = function(d) {
             if(d.status == 'ok') {
                 me.attr('class','lurk symbols nerdzoptions');
-                me.html("");
                 me.attr('title',d.message);
             }
         }
@@ -570,7 +566,6 @@ $(document).ready(function() {
         var tog = function(d) {
             if(d.status == 'ok') {
                 me.attr('class','unbookmark symbols nerdzoptions');
-                me.html("");
                 me.attr('title',d.message);
             }
         }
@@ -584,7 +579,6 @@ $(document).ready(function() {
         var tog = function(d) {
             if(d.status == 'ok') {
                 me.attr('class','bookmark symbols nerdzoptions');
-                me.html("");
                 me.attr('title',d.message);
             }
         }

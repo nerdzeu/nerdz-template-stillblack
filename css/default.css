@@ -727,3 +727,68 @@ button:active, input[type=submit]:active, .profilebutton:active {
 .vote.down {
     margin-bottom: -5px;
 }
+
+/* Symbols */
+
+.up:before {
+    content: "";
+}
+
+.down:before {
+    content: "";
+}
+
+.Link:before {
+    content: "";
+}
+
+.hide:before {
+    content: "";
+}
+
+.delpost:before {
+    content: "";
+}
+
+.editpost:before {
+    content: "";
+}
+
+.imglocked:before {
+    content: "";
+}
+
+.imgunlocked:before {
+    content: "";
+}
+
+.lurk:before {
+    content: "";
+}
+
+.unlurk:before {
+    content: "";
+}
+
+.unbookmark:before {
+    content: "";
+}
+
+.bookmark:before {
+    content: "";
+}
+
+.qu_ico:before {
+    content: "";
+}
+
+.delcomment:before {
+    content: "";
+}
+
+.feed:before {
+    content: "";
+}
+
+/* end Symbols */
+

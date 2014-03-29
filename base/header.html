@@ -14,16 +14,16 @@ function checkPM () {
         <nav>
 {if="$logged_b"}
         <div id="head-left">
-            <div id="notify" class="headlink"> <a accesskey="x" class="symbols"><span id="notifycounter"></span></a></div>
+            <div id="notify" class="headlink"> <a accesskey="x" class="symbols"><span id="notifycounter"></span></a></div>
         </div>
         <form id="footersearch">
             <input id="search" type="text" name="q" placeholder="{$search}" />
         </form>
         <div id="head-right"> 
-                <div id="profile" class="headlink"> <a title="{$profile}" href="/{$myusername4link_n}" accesskey="p" class="symbols"></a></div>
-                <div id="preferences" class="headlink"> <a title="{$preferences}" href="/preferences.php" accesskey="z" class="symbols"></a></div>
-                <div id="pm" class="headlink"> <a  id="pmlink" title="{$pm}" href="/pm.php" accesskey="m" class="symbols"><span id="pmcounter"></span></a></div>
-                <div id="out" class="headlink"> <a title="{$logout}" href="/" id="logout" data-tok="{$tok_n}" class="symbols"></a></div>
+                <div id="profile" class="headlink"> <a title="{$profile}" href="/{$myusername4link_n}" accesskey="p" class="symbols"></a></div>
+                <div id="preferences" class="headlink"> <a title="{$preferences}" href="/preferences.php" accesskey="z" class="symbols"></a></div>
+                <div id="pm" class="headlink"> <a  id="pmlink" title="{$pm}" href="/pm.php" accesskey="m" class="symbols"><span id="pmcounter"></span></a></div>
+                <div id="out" class="headlink"> <a title="{$logout}" href="/" id="logout" data-tok="{$tok_n}" class="symbols"></a></div>
         </div>
         <div style="visibility: hidden"> {$welcome}, {$myusername_n} </div>
 {else}
