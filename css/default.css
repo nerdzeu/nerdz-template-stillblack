@@ -29,7 +29,7 @@ hr {
     z-index: 200;
 }
 
-#site_title a:visited, #site_title a:active, #site_title a:link, #footer_main a:visited, #footer_main a:active, #footer_main a:link
+#title_left a:visited, #title_left a:active, #title_left a:link, #footer_main a:visited, #footer_main a:active, #footer_main a:link
 {
     color: #000;
     font-weight: bold;
@@ -571,20 +571,29 @@ button:active, input[type=submit]:active, .profilebutton:active {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-    font-size: 25px;
-    padding-top: 5px;
-    padding-bottom: 2px;
+    font-size: 150%;
+    padding-top: 7px;
+    padding-bottom: 3px;
+
+}
+
+.headlink a, .headlink a:visited, .headlink a:link, .headlink a:active {
+    color: #151515;
 }
 
 .headlink:hover {
-    font-size: 29px;
-    padding-top:0px;
-    color: #2370B6;
+    font-size: 170%;
+    padding-top:6px;
+}
+
+.headlink a:hover {
+    color: #000;
 }
 
 #pmcounter, #notifycounter {
     font-size: 15px;
     margin-left: 2px;
+    overflow-x:hidden;
 }
 
 #search {
@@ -633,38 +642,8 @@ button:active, input[type=submit]:active, .profilebutton:active {
     margin-right: -7px;
 }
 
-.nerdz-code-title:after {
-    content: "";
-    float: left;
-    font-family: 'icomoon';
-    font-weight: lighter;
-}
-
-.yt_frame:before {
-    content: "";
-    font-family: 'icomoon';
-    position: absolute;
-    top: 0px;
-    left:0px;
-    width: 130px;
-    height: 130px;
-    background-color: transparent;
-    line-height: 120px;
-    text-align: center;
-    font-size: 40px;
-    color: #cc181e;
-    text-shadow: 0 0 3px #222;
-}
-
 .quote span {
     display: none;
-}
-
-.quote:before, .qu_user:before {
-    content: "";
-    font-family: 'icomoon';
-    float: left;
-    margin-right: 4px;
 }
 
 .spoiler hr {
@@ -678,12 +657,6 @@ button:active, input[type=submit]:active, .profilebutton:active {
     background-color: #AAA;
     color: #111;
     padding: 2px;
-}
-
-.spoiler:before {
-    content: "";
-    font-family: 'icomoon';
-    float: left;
 }
 
 .buttons {
@@ -790,5 +763,40 @@ button:active, input[type=submit]:active, .profilebutton:active {
     content: "";
 }
 
+.yt_frame:before {
+    content: "";
+    font-family: 'icomoon';
+    position: absolute;
+    top: 0px;
+    left:0px;
+    width: 130px;
+    height: 130px;
+    background-color: transparent;
+    line-height: 120px;
+    text-align: center;
+    font-size: 40px;
+    color: #cc181e;
+    text-shadow: 0 0 3px #222;
+}
+
+.quote:before, .qu_user:before {
+    content: "";
+    font-family: 'icomoon';
+    float: left;
+    margin-right: 4px;
+}
+
+.nerdz-code-title:after {
+    content: "";
+    float: left;
+    font-family: 'icomoon';
+    font-weight: lighter;
+}
+
+.spoiler:before {
+    content: "";
+    font-family: 'icomoon';
+    float: left;
+}
 /* end Symbols */
 

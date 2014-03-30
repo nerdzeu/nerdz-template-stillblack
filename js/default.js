@@ -637,20 +637,22 @@ $(document).ready(function() {
     setInterval(function() {
         var nc = document.getElementById("notifycounter");
         var nt = document.getElementById("notify");
-        if (nc.innerHTML != 0)
+        if (nc.innerHTML != 0) {
             nt.style.color= "#CC0000";
-        else
+        } else {
             nt.style.color= "#000"
+        }
     }, 200);
 
     setInterval(function () { 
         var pc= document.getElementById('pmcounter');
         var pl= document.getElementById('pmlink');
 
-        if (pc.innerHTML != "0" && pc.innerHTML != "")
+        if (pc.innerHTML != "0" && pc.innerHTML != "") {
             pl.style.color= "#CC0000";
-        else
+        } else {
             pl.style.color= "#000"
+        }
         
     }, 200);
 });
