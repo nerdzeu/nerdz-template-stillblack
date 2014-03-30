@@ -564,6 +564,17 @@ button:active, input[type=submit]:active, .profilebutton:active {
     margin-left: 40px;
 }
 
+#notify {
+    width: 60px;
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 150%;
+    padding-top: 7px;
+    padding-bottom: 3px;
+
+}
 
 .headlink {
     width: 60px;

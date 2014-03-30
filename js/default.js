@@ -648,7 +648,7 @@ $(document).ready(function() {
         var pc= document.getElementById('pmcounter');
         var pl= document.getElementById('pmlink');
 
-        if (pc.innerHTML != "0" && pc.innerHTML != "") {
+        if (pc.innerHTML != 0) {
             pl.style.color= "#CC0000";
         } else {
             pl.style.color= "#000"
