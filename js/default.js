@@ -15,7 +15,6 @@ $(document).ready(function() {
         $('#bugs').slideToggle();        
     })
 
-    $('.nerdz-code-title').after("<span class='symbols' style='float: left'></span>");
     var _h = $("head");
     var append_theme = "?skin=sunburst";
     var prettify = document.createElement ("script");

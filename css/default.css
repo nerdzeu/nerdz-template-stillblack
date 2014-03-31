@@ -577,7 +577,7 @@ button:active, input[type=submit]:active, .profilebutton:active {
 }
 
 .headlink {
-    width: 60px;
+    padding-right: 20px;
     height: 35px;
     display: inline-block;
     text-align: center;
@@ -588,17 +588,19 @@ button:active, input[type=submit]:active, .profilebutton:active {
 
 }
 
-.headlink a, .headlink a:visited, .headlink a:link, .headlink a:active {
+.headlink a, .headlink a:visited, .headlink a:link, .headlink a:active, #profile a, #profile a:visited, #profile a:link, #profile a:active {
     color: #151515;
-}
-
-.headlink:hover {
-    font-size: 170%;
-    padding-top:6px;
 }
 
 .headlink a:hover {
     color: #000;
+}
+
+#profile {
+    font-size: 90%;
+    display: inline-block;
+    color: #151515;
+    padding-right: 20px;
 }
 
 #pmcounter, #notifycounter {
