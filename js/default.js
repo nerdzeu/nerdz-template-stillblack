@@ -5,15 +5,15 @@ $(document).ready(function() {
     // append version information
     if ($("#left_col").length && window.location.pathname == "/home.php" && typeof Nversion !== 'undefined' && Nversion != 'null')
         // according to stackoverflow, using 'target' in HTML5 is alright so let's do it
-        $('#commit').html("<a id='github' href='https://github.com/nerdzeu/nerdz.eu/commit/"+ Nversion+"' target='wowsoversion'>"+Nversion+"</a>" )
+        $('#commit').html("<a id='github' href='https://github.com/nerdzeu/nerdz.eu/commit/"+ Nversion+"' target='wowsoversion'>"+Nversion+"</a>" );
     // load the prettyprinter
     $('#showinfo').on('click', function () {
         $('#infobox').slideToggle();        
-    })
+    });
 
     $('#bug_title').on('click', function () {
         $('#bugs').slideToggle();        
-    })
+    });
 
     var _h = $("head");
     var append_theme = "?skin=sunburst";
@@ -27,7 +27,7 @@ $(document).ready(function() {
         var list = $("#notify_list"), old = $(this).html();
         var nold = parseInt(old);
         if(list.length) {
-            if(isNaN(nold) || nold == 0)
+            if(isNaN(nold) || nold === 0)
             {
                 list.remove();
             }
@@ -67,7 +67,7 @@ $(document).ready(function() {
     var wrongPages = [ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ];
        if($.inArray(location.pathname,wrongPages) != -1) {
            $("#footersearch").hide();
-       };
+       }
 
     $("#footersearch").on('submit',function(e) {
         e.preventDefault();
@@ -75,7 +75,7 @@ $(document).ready(function() {
         var qs =  $.trim($("#footersearch input[name=q]").val());
         var num = 10; //TODO: numero di posts, parametro?
 
-        if(qs == '') {
+        if(qs === '') {
             return false;
         }
 
@@ -185,7 +185,7 @@ $(document).ready(function() {
 
     $(".preview").on('click',function(){
         var txt = $($(this).data('refto')).val();
-        if(undefined != txt && txt != '') {
+        if(undefined !== txt && txt !== '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
         }
     });
@@ -209,7 +209,7 @@ $(document).ready(function() {
         txtarea.val(txtarea.val()+' '); //workaround
         var txt = txtarea.val();
         txtarea.val($.trim(txtarea.val()));
-        if(undefined != txt && $.trim(txt) != '') {
+        if(undefined !== txt && $.trim(txt) !== '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
         }
     });
@@ -309,7 +309,7 @@ $(document).ready(function() {
 
     plist.on('click',".showcomments",function() {
         var refto = $('#' + $(this).data('refto'));
-        if(refto.html() == '')
+        if(refto.html() === '')
         {
             refto.html(loading+'...');
             N.html[plist.data ('type')].getComments ({
@@ -385,7 +385,7 @@ $(document).ready(function() {
             moreBtn.parent().after (r);
             if (intCounter == 1)
                 moreBtn.parent().find (".scroll_bottom_hidden").show();
-            if ($.trim (r) == "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())
+            if ($.trim (r) === "" || _ref.find (".nerdz_from").length < 10 || (10 * (intCounter + 1)) == _ref.find (".commentcount:eq(0)").html())
             {
                 var btnDb = moreBtn.hide().parent();
                 btnDb.find (".scroll_bottom_separator").hide();
@@ -508,7 +508,7 @@ $(document).ready(function() {
                 me.attr('class','imgunlocked symbols nerdzoptions');
                 me.attr('title', d.message);
             }
-        }
+        };
           
           if($(this).data('silent')) { //nei commenti
               N.json[plist.data('type')].reNotifyFromUserInPost({ hpid: $(this).data('hpid'), from: $(this).data('silent') },function(d) {tog(d);});
@@ -525,7 +525,7 @@ $(document).ready(function() {
                 me.attr('class','imglocked symbols nerdzoptions');
                 me.attr('title',d.message);
             }
-        }
+        };
 
         if($(this).data('silent')) {
             N.json[plist.data('type')].noNotifyFromUserInPost({ hpid: $(this).data('hpid'), from: $(this).data('silent') },function(d) {tog(d);});
@@ -542,7 +542,7 @@ $(document).ready(function() {
                 me.attr('class','unlurk symbols nerdzoptions');
                 me.attr('title',d.message);
             }
-        }
+        };
           
           N.json[plist.data('type')].lurkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
 
@@ -555,7 +555,7 @@ $(document).ready(function() {
                 me.attr('class','lurk symbols nerdzoptions');
                 me.attr('title',d.message);
             }
-        }
+        };
           
           N.json[plist.data('type')].unlurkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
     });
@@ -567,7 +567,7 @@ $(document).ready(function() {
                 me.attr('class','unbookmark symbols nerdzoptions');
                 me.attr('title',d.message);
             }
-        }
+        };
           
           N.json[plist.data('type')].bookmarkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
 
@@ -580,7 +580,7 @@ $(document).ready(function() {
                 me.attr('class','bookmark symbols nerdzoptions');
                 me.attr('title',d.message);
             }
-        }
+        };
 
         N.json[plist.data('type')].unbookmarkPost({hpid: $(this).data('hpid') },function(d) {tog(d);});
         
@@ -636,10 +636,10 @@ $(document).ready(function() {
     setInterval(function() {
         var nc = document.getElementById("notifycounter");
         var nt = document.getElementById("notify");
-        if (nc.innerHTML != 0) {
+        if (nc.innerHTML !== 0) {
             nt.style.color= "#CC0000";
         } else {
-            nt.style.color= "#000"
+            nt.style.color= "#000";
         }
     }, 200);
 
@@ -647,10 +647,10 @@ $(document).ready(function() {
         var pc= document.getElementById('pmcounter');
         var pl= document.getElementById('pmlink');
 
-        if (pc.innerHTML != 0) {
+        if (pc.innerHTML !== 0) {
             pl.style.color= "#CC0000";
         } else {
-            pl.style.color= "#000"
+            pl.style.color= "#000";
         }
         
     }, 200);
