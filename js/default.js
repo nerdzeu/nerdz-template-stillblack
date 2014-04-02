@@ -636,7 +636,7 @@ $(document).ready(function() {
     setInterval(function() {
         var nc = document.getElementById("notifycounter");
         var nt = document.getElementById("notify");
-        if (nc.innerHTML !== 0) {
+        if (nc.innerHTML !== "0") {
             nt.style.color= "#CC0000";
         } else {
             nt.style.color= "#000";
@@ -647,7 +647,7 @@ $(document).ready(function() {
         var pc= document.getElementById('pmcounter');
         var pl= document.getElementById('pmlink');
 
-        if (pc.innerHTML !== 0) {
+        if (pc.innerHTML !== "0") {
             pl.style.color= "#CC0000";
         } else {
             pl.style.color= "#000";
