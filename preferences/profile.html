@@ -4,14 +4,14 @@
 <form id="edprofrm">
 <table class="intable">
     <tr>
-        <td style="width: 50%; vertical-align: top">
+        <td style="width: 30%; vertical-align: top">
             {$interests}:
             <p class="small">
                 {$one_per_line}
             </p>
         </td>
         <td style="width: 50%">
-            <textarea name="interests" rows="8" cols="26">
+            <textarea class="pref-input" name="interests" rows="8" cols="26">
                 {loop="interests_a"}
                     {$value}&#13;
                 {/loop}
@@ -28,7 +28,7 @@
         </td>
         <td>
             <br />
-            <textarea name="biography" rows="8" cols="26">
+            <textarea class="pref-input" name="biography" rows="8" cols="26">
             {$biography_n}
             </textarea>
         </td>
@@ -42,7 +42,7 @@
         </td>
         <td>
             <br />
-            <textarea name="quotes" rows="8" cols="26">
+            <textarea class="pref-input" name="quotes" rows="8" cols="26">
                 {loop="quotes_a"}
                     {$value}&#13;&#10;
                 {/loop}
@@ -56,7 +56,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="website" value="{$website_n}" />
+            <input type="text" class="pref-input" name="website" value="{$website_n}" />
         </td>
     </tr>
     <tr>
@@ -66,7 +66,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="github" value="{$github_n}" />
+            <input type="text" class="pref-input" name="github" value="{$github_n}" />
         </td>
     </tr>
     <tr>
@@ -76,7 +76,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="jabber" value="{$jabber_n}" />
+            <input type="text" class="pref-input" name="jabber" value="{$jabber_n}" />
         </td>
     </tr>
     <tr>
@@ -86,7 +86,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="yahoo" value="{$yahoo_n}" />
+            <input type="text" class="pref-input" name="yahoo" value="{$yahoo_n}" />
         </td>
     </tr>
     <tr>
@@ -96,7 +96,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="facebook" value="{$facebook_n}" />
+            <input type="text" class="pref-input" name="facebook" value="{$facebook_n}" />
         </td>
     </tr>
     <tr>
@@ -106,7 +106,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="twitter" value="{$twitter_n}" />
+            <input type="text" class="pref-input" name="twitter" value="{$twitter_n}" />
         </td>
     </tr>
     <tr>
@@ -116,7 +116,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="steam" value="{$steam_n}" />
+            <input type="text" class="pref-input" name="steam" value="{$steam_n}" />
         </td>
     </tr>
     <tr>
@@ -126,7 +126,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="skype" value="{$skype_n}" />
+            <input type="text" class="pref-input" name="skype" value="{$skype_n}" />
         </td>
     </tr>
     <tr>
@@ -140,7 +140,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="userscript" value="{$userscript_n}" />
+            <input type="text" class="pref-input" name="userscript" value="{$userscript_n}" />
         </td>
     </tr>
     <tr>
@@ -154,7 +154,7 @@
         </td>
         <td>
             <br />
-            <input type="text" name="dateformat" value="{$dateformat_n}" />
+            <input type="text" class="pref-input" name="dateformat" value="{$dateformat_n}" />
         </td>
     </tr>
     <tr>
