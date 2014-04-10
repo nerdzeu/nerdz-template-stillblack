@@ -184,6 +184,7 @@ $(document).ready(function() {
     });
 
     $(".preview").on('click',function(){
+        detectURL($(this));
         var txt = $($(this).data('refto')).val();
         if(undefined !== txt && txt !== '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
@@ -196,12 +197,20 @@ $(document).ready(function() {
         }
     });
 
+    $("#stdfrm").children("input[type=submit]").on("click", function () {
+        detectURL($(this));
+    });
+
     //begin plist into events (common to: homepage, projects, profiles)
     var plist = $("#postlist");
 
     plist.on('click', ".yt_frame", function(e) {
         e.preventDefault();
         N.yt($(this), $(this).data("vid"));
+    });
+
+    plist.on('click', ".frmcomment", function () {
+        detectURL($(this).children("button[class=preview]"));
     });
 
     plist.on('click','.preview',function(){
@@ -489,7 +498,7 @@ $(document).ready(function() {
                                             refto.html(o);
                                             refto.slideToggle("slow");
                                             if(refto.data("hide").length) {
-                                                $(refto.find("div.small")[0]).prepend('<a class="hide symbols nerdzoptions" data-postid="post'+hpid+'" title= "'+refto.data("hide")+'"></a>');
+                                                $(refto.find("div.small")[0]).prepend('<a class="hide symbols nerdzoptions" data-postid="post'+hpid+'" title= "'+refto.data("hide")+'"></a>');
                                             }
                                       });
                                  }
@@ -655,3 +664,62 @@ $(document).ready(function() {
         
     }, 200);
 });
+
+
+function firstindex(str, from) {
+    var index = str.indexOf("http://", from);
+
+    if (index == -1 || ( str.indexOf("https://", from) >= 0 && str.indexOf("https://", from) < index )) {
+        index= str.indexOf("https://", from);
+    }
+    if (index == -1 || ( str.indexOf("ftp://", from) >= 0 && str.indexOf("ftp://", from) < index )) {
+        index= str.indexOf("ftp://", from);
+    }
+
+    return index;
+}
+
+function addTag(str, index) {
+    if (index < 4) {
+        return true
+    } 
+    else if (index > 3 && str.substring(index-4, index).toLowerCase() == "[yt]") {
+        return false;
+    }
+    else if (index > 4 && (str.substring(index-5, index).toLowerCase() == "[url]" || str.substring(index-5, index).toLowerCase() == "[img]" || str.substring(index-5, index).toLowerCase() == "[url=")) {
+        return false;
+    } 
+    else if (index > 5 && str.substring(index-6, index-1).toLowerCase() == "[url=") {
+        return false;
+    }
+    else if (index > 8 && str.substring(index-9, index).toLowerCase() == "[youtube]") {
+        return false;
+    }
+    return true;
+}
+
+function detectURL(button) {
+    var txtarea= button.parent().children("textarea");
+    var str= txtarea.val();
+
+    index = firstindex(str, 0);
+
+    while(index >= 0) {
+        if (addTag(str, index) == false) {
+            index++;
+        } else {
+            if (str.indexOf(" ",index) < 0 && str.indexOf("[",index) < 0) {
+                str= str.substring(0, index)+"[url]"+str.substring(index, str.length)+"[/url]";
+            } else if (str.indexOf(" ",index) < 0) {
+                str= str.substring(0, index)+"[url]"+str.substring(index, str.indexOf("[",index))+"[/url]"+str.substring(str.indexOf("[",index), str.length);
+            } else {
+                str= str.substring(0, index)+"[url]"+str.substring(index, str.indexOf(" ",index))+"[/url]"+str.substring(str.indexOf(" ",index), str.length);
+            }
+            index += 6;
+        }
+
+        index= firstindex(str, index);
+    }
+
+    txtarea.val(str);
+}
