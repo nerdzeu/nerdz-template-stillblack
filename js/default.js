@@ -184,7 +184,7 @@ $(document).ready(function() {
     });
 
     $(".preview").on('click',function(){
-        detectURL($(this));
+        $(this).parent().children("textarea").val($(this).parent().children("textarea").val().autoLink());
         var txt = $($(this).data('refto')).val();
         if(undefined !== txt && txt !== '') {
             window.open('/preview.php?message='+encodeURIComponent(txt));
@@ -198,7 +198,7 @@ $(document).ready(function() {
     });
 
     $("#stdfrm").children("input[type=submit]").on("click", function () {
-        detectURL($(this));
+        $(this).parent().children("textarea").val($(this).parent().children("textarea").val().autoLink());
     });
 
     //begin plist into events (common to: homepage, projects, profiles)
@@ -210,7 +210,7 @@ $(document).ready(function() {
     });
 
     plist.on('click', ".frmcomment", function () {
-        detectURL($(this).children("button[class=preview]"));
+        $(this).children("textarea").val($(this).children("textarea").val().autoLink());
     });
 
     plist.on('click','.preview',function(){
@@ -665,61 +665,25 @@ $(document).ready(function() {
     }, 200);
 });
 
+//URL detection
 
-function firstindex(str, from) {
-    var index = str.indexOf("http://", from);
+REformat = function(str) {
+  return new RegExp('(?!\\[(?:img|url|code|gist|yt|youtube|noparse)[^\\]]*?\\])' + str + '(?![^\\[]*?\\[\\/(img|url|code|gist|yt|youtube|noparse)\\])', 'gi');
+};
 
-    if (index == -1 || ( str.indexOf("https://", from) >= 0 && str.indexOf("https://", from) < index )) {
-        index= str.indexOf("https://", from);
+if (!String.prototype.autoLink) {
+  String.prototype.autoLink = function() {
+    str = this;
+    var pattern = REformat('(^|\\s+)((((ht|f)tps?:\\/\\/)|[www])([a-z\\-0-9]+\\.)*[\\-\\w]+(\\.[a-z]{2,4})+(\\/[+%:\\w\\_\\-\\?\\=\\#&\\.\\(\\)]*)*(?![a-z]))');
+    urls = this.match(pattern);
+    for (var i in urls) {
+      if (urls[i].match(/\.(png|gif|jpg|jpeg)$/))
+        str = str.replace(urls[i], '[img]' + (urls[i].match(/(^|\s+)https?:\/\//) ? '' : 'http://') + urls[i] + '[/img]');
+      if (urls[i].match(/youtube\.com|https?:\/\/youtu\.be/) && !urls[i].match(/playlist/))
+        str = str.replace(urls[i], '[yt]' + $.trim(urls[i]) + '[/yt]');
     }
-    if (index == -1 || ( str.indexOf("ftp://", from) >= 0 && str.indexOf("ftp://", from) < index )) {
-        index= str.indexOf("ftp://", from);
-    }
-
-    return index;
+    return str.replace(pattern, '$1[url]$2[/url]').replace(/\[(\/)?noparse\]/gi, '').replace(REformat('<3'), '\u2665');
+  };
 }
 
-function addTag(str, index) {
-    if (index < 4) {
-        return true
-    } 
-    else if (index > 3 && str.substring(index-4, index).toLowerCase() == "[yt]") {
-        return false;
-    }
-    else if (index > 4 && (str.substring(index-5, index).toLowerCase() == "[url]" || str.substring(index-5, index).toLowerCase() == "[img]" || str.substring(index-5, index).toLowerCase() == "[url=")) {
-        return false;
-    } 
-    else if (index > 5 && str.substring(index-6, index-1).toLowerCase() == "[url=") {
-        return false;
-    }
-    else if (index > 8 && str.substring(index-9, index).toLowerCase() == "[youtube]") {
-        return false;
-    }
-    return true;
-}
-
-function detectURL(button) {
-    var txtarea= button.parent().children("textarea");
-    var str= txtarea.val();
-
-    index = firstindex(str, 0);
-
-    while(index >= 0) {
-        if (addTag(str, index) == false) {
-            index++;
-        } else {
-            if (str.indexOf(" ",index) < 0 && str.indexOf("[",index) < 0) {
-                str= str.substring(0, index)+"[url]"+str.substring(index, str.length)+"[/url]";
-            } else if (str.indexOf(" ",index) < 0) {
-                str= str.substring(0, index)+"[url]"+str.substring(index, str.indexOf("[",index))+"[/url]"+str.substring(str.indexOf("[",index), str.length);
-            } else {
-                str= str.substring(0, index)+"[url]"+str.substring(index, str.indexOf(" ",index))+"[/url]"+str.substring(str.indexOf(" ",index), str.length);
-            }
-            index += 6;
-        }
-
-        index= firstindex(str, index);
-    }
-
-    txtarea.val(str);
-}
+// End of url detection
