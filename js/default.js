@@ -665,7 +665,7 @@ $(document).ready(function() {
     }, 200);
 });
 
-//URL detection
+//URL detection, thanks to DrJest for these functions
 
 REformat = function(str) {
   return new RegExp('(?!\\[(?:img|url|code|gist|yt|youtube|noparse)[^\\]]*?\\])' + str + '(?![^\\[]*?\\[\\/(img|url|code|gist|yt|youtube|noparse)\\])', 'gi');
