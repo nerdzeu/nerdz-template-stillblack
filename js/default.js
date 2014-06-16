@@ -187,7 +187,7 @@ $(document).ready(function() {
         $(this).parent().children("textarea").val($(this).parent().children("textarea").val().autoLink());
         var txt = $($(this).data('refto')).val();
         if(undefined !== txt && txt !== '') {
-            window.open('/preview.php?message='+encodeURIComponent(txt));
+            window.open('/preview.php?message='+encodeURIComponent(txt+' ')); //The whitespace is a workaround used to make the preview works also when there is a dot at the end of the message
         }
     });
     
