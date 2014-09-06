@@ -13,22 +13,35 @@
             {$value.from_n}
         </a>
         <span class="nerdz_date light-text">
-            <a href="#{$value.uid_n}" title="Permalink" data-refto="post{$value.hpid_n}" id="nd{$value.uid_n}{$value.hcid_n}">{$value.datetime_n}</a>
+            <a href="#{$value.uid_n}" class="nerdzoptions" title="Permalink" data-refto="post{$value.hpid_n}" id="nd{$value.uid_n}{$value.hcid_n}">{$value.datetime_n}</a>
+            <span class="nerdzoptions separator">|</span>
             {if="$value.canshowlock_b"}
                 {if="$value.lock_b"}
-                    <a class="imglocked symbols nerdzoptions" data-silent="{$value.fromid_n}" data-hpid="{$value.hpid_n}" title="{$recv_notify}"></a>
+                    <a class="imglocked symbols comment nerdzoptions" data-silent="{$value.fromid_n}" data-hpid="{$value.hpid_n}" title="{$recv_notify}"></a>&nbsp;
                 {else}
-                    <a class="imgunlocked symbols nerdzoptions" data-silent="{$value.fromid_n}" data-hpid="{$value.hpid_n}" title="{$recv_notify}"></a>
+                    <a class="imgunlocked symbols comment nerdzoptions" data-silent="{$value.fromid_n}" data-hpid="{$value.hpid_n}" title="{$recv_notify}"></a>&nbsp;
                 {/if}
             {/if}
-            <a title="quote" class="qu_ico symbols nerdzoptions" data-hcid="{$value.hcid_n}" data-type="p" data-refto="commentto{$value.hpid_n}" ></a>
-            <span class="thumbs separator">|</span>
-            <span class='thumbs thumbs-counter{if="$value.thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$value.thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$value.thumbs_n > 0"}+{/if}{$value.thumbs_n}</span>
-            <div class="thumbs comment nerdz_thumbs" data-refto="{$value.hcid_n}">
+            <a title="quote" class="qu_ico symbols nerdzoptions comment" data-hcid="{$value.hcid_n}" data-type="u" data-refto="commentto{$value.hpid_n}"></a>&nbsp;
+
+            {if="$value.caneditcomment_b"}
+                <a class="editpost nerdzoptions symbols edit comment" data-hcid="{$value.hcid_n}" data-refto="{$value.uid_n}"></a>&nbsp;
+            {/if}
+            <span class="revisions nerdzoptions comment">
+                {if="$value.revisions_n > 0"}
+                <span title="{$number_of_modifications}: {$value.revisions_n}" class="oldrev comment" data-refto="{$value.uid_n}" data-revisions="{$value.revisions_n}" data-hcid="{$value.hcid_n}"><</span>&nbsp;
+                {/if}
+            </span>
+
+            <span class="nerdzoptions separator">|</span>
+
+            <div class="thumbs comment nerdz_thumbs nerdzoptions" data-refto="{$value.hcid_n}">
               &nbsp;&nbsp;
-              <i class='vote up{if="$value.uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
-              <i class='vote down{if="$value.uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <i class='comment vote up{if="$value.uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
+              <i class='comment vote down{if="$value.uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
             </div>
+            <span class='comment nerdzoptions thumbs thumbs-counter{if="$value.thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$value.thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$value.thumbs_n > 0"}+{/if}{$value.thumbs_n}</span>
+
         </span>
     </div>
     <div class="nerdz_comments" style="width:auto">

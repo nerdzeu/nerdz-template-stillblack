@@ -152,6 +152,10 @@ FILE: /base/faq.html
 
 $faq_n
 
+FILE: /base/footer.html
+
+$logged_b
+
 FILE: /base/userslist.html
 
 $list_a
