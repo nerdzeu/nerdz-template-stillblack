@@ -776,6 +776,10 @@ button:active, input[type=submit]:active, .profilebutton:active {
     content: "";
 }
 
+.close:before, .open:before {
+    content: "";
+}
+
 .feed:before {
     content: "";
 }
@@ -819,10 +823,22 @@ button:active, input[type=submit]:active, .profilebutton:active {
 .birthday:before {
     content: "";
 }
+
+.oldrev:before {
+    content: "";
+}
+
+.newrev:before {
+    content: "";
+}
+
 /* end Symbols */
 
 .oldrev, .newrev {
     cursor: pointer;
+    margin-right: 5px;
+    margin-left: -5px;
+    margin-bottom: 3px;
 }
 
 #newscheck {

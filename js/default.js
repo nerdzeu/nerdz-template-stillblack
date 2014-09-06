@@ -372,10 +372,10 @@ $(document).ready(function() {
                 tagTime.html(r.datetime);
                 if(!me.parent().find(".newrev").length) {
                     var s = $(document.createElement("span"));
-                    s.attr("class", "newrev" + (id === 'hcid' ? ' comment' : ''));
+                    s.attr("class", "newrev symbols" + (id === 'hcid' ? ' comment' : ''));
                     s.attr('data-refto', refto);
                     s.attr('data-'+id, me.data(id));
-                    s.html(">&nbsp;");
+                    s.html("");
                     me.parent().append(s);
                 }
 
@@ -629,6 +629,42 @@ $(document).ready(function() {
         });
     });
 
+    plist.on('click',".close", function(e) {
+        e.preventDefault();
+        var refto = $('#' + $(this).data('refto'));
+        var hpid = $(this).data('hpid');
+        var me = $(this), arrow = me.children();
+
+        
+        N.json[plist.data('type')].closePost({hpid: hpid},function(m) {
+            if(m.status != 'ok') {
+                alert(m.message);
+            } else {
+                refto.css('color','red');
+                me.title= N.getLangData().OPEN;
+                me.attr('class','open symbols nerdzoptions');
+            }
+        });
+    });
+
+    plist.on('click',".open", function(e) {
+        e.preventDefault();
+        var refto = $('#' + $(this).data('refto'));
+        var hpid = $(this).data('hpid');
+        var me = $(this), arrow = me.children();
+
+        
+        N.json[plist.data('type')].openPost({hpid: hpid},function(m) {
+            if(m.status != 'ok') {
+                alert(m.message);
+            } else {
+                refto.css('color','');
+                me.title= N.getLangData().CLOSE;
+                me.attr('class',"close symbols nerdzoptions");
+            }
+        });
+    });
+
     plist.on('click',".editpost",function(e) {
        e.preventDefault();
         var refto = $('#' + $(this).data('refto')), hpid = $(this).data('hpid');
@@ -672,7 +708,7 @@ $(document).ready(function() {
                                     refto.html(o);
                                     refto.slideToggle("slow");
                                     if(typeof N.getLangData().HIDE != "undefined") {
-                                        $(refto.find("div.small")[0]).prepend('<a class="hide" style="float:right; margin-left:3px" data-postid="post'+id+'">'+N.getLangData().HIDE+'</a>');
+                                        $(refto.find("div.small")[0]).prepend('<a class="hide nerdzoptions symbols" style="float:right; margin-left:3px" data-postid="post'+id+'" title="N.getLangData().HIDE"></a>');
                                     }
 
                                 });
