@@ -1,8 +1,9 @@
 <h1 style="margin-top:0px">{$interactions}</h1>
 <ol class="interactions">
 {loop="list_a"}
-<li class="nerdz_interactions">
-    <span class="nerdz_date" style="float:left">{$value.datetime_n} | </span>&nbsp;
+<li class="nerdz_comments">
+    <span class="nerdz_date" style="float:left">{$value.datetime_n}</span>&nbsp;
+    <span class="rightarrow" style="margin-left:11px"></span>&nbsp;
     {if="$value.type_n == 'blacklist' || $value.type_n == 'followers' || $value.type_n == 'whitelist'"}
         {if="$value.type_n == 'blacklist'"}
             {if="$value.fromid_n == $me_n"}
