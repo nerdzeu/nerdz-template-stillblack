@@ -65,56 +65,43 @@ $(document).ready(function() {
 
     /* il footersearch si mostra solo in alcune pagine */
     var wrongPages = [ '/bbcode.php','/terms.php','/faq.php','/stats.php','/rank.php','/preferences.php', '/informations.php', '/preview.php' ];
-       if($.inArray(location.pathname,wrongPages) != -1) {
-           $("#footersearch").hide();
-       }
+    if($.inArray(location.pathname,wrongPages) != -1) {
+        $("#footersearch").hide();
+    }
+
+    //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+    window.getParameterByName = function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    };
 
     $("#footersearch").on('submit',function(e) {
         e.preventDefault();
-        var plist = $("#postlist");
         var qs =  $.trim($("#footersearch input[name=q]").val());
-        var num = 10; //TODO: numero di posts, parametro?
-
         if(qs === '') {
             return false;
         }
+        qs = encodeURIComponent(qs);
+        var plist = $("#postlist");
 
-        var manageResponse = function(d)
-        {
-            plist.html(d);
-            //variabile booleana messa come stringa data che nel dom posso salvare solo stringhe
-            sessionStorage.setItem('searchLoad', "1"); //e' la variabile load di search, dato che queste azioni sono in questo file js ma sono condivise da tutte le pagine, la variabile di caricamento dev'essere nota a tutte
-        };
+        var type = window.getParameterByName('type');
+        if(type === '') {
+            type = plist.data('type');
+        }
+        type = encodeURIComponent(type);
+        var loc = window.getParameterByName('location');
+        if(loc === '') {
+            loc = plist.data('location');
+        }
+        loc = encodeURIComponent(loc);
+        var id = window.getParameterByName('id');
+        if(id === '') {
+            id = plist.data('id');
+        }
+        id = encodeURIComponent(id);
 
-        if(plist.data('type') == 'project')
-        {
-            if(plist.data('location') == 'home')
-            {
-                N.html.search.globalProjectPosts(num, qs, manageResponse);
-            }
-            else
-            {
-                if(plist.data('location') == 'project')
-                {
-                    N.html.search.specificProjectPosts(num, qs, plist.data('projectid'),manageResponse);
-                }
-            }
-        }
-        else
-        {
-            if(plist.data('location') == 'home')
-            {
-                N.html.search.globalProfilePosts(num, qs, manageResponse);
-            }
-            else
-            {
-                if(plist.data('location') == 'profile')
-                {
-                    N.html.search.specificProfilePosts(num, qs, plist.data('profileid'),manageResponse);
-                }
-            }
-        }
-        plist.data('mode','search');
+        window.location.href='search.php?q=' + qs + '&type=' + type + '&location=' + loc + '&id=' + id;
     });
 
     $("#logout").on('click',function(event) {
@@ -339,6 +326,168 @@ $(document).ready(function() {
         }
     });
 
+    plist.on('click', ".oldrev", function() {
+        var me = $(this), refto = $(this).data('refto');
+        var revno = parseInt( $(this).data('revisions') );
+        var func = "getRevision";
+        var obj = {hpid: $(this).data('hpid'), revNo: revno};
+        var id = 'hpid';
+
+        if(me.hasClass("comment")) {
+            func = "getCommentRevision";
+            obj = {hcid: $(this).data('hcid'), revNo: revno};
+            id = 'hcid';
+        }
+
+        if(!$(this).data('original-rev')) {
+            $(this).data('original-rev', revno);
+        }
+
+        if(revno > 0) {
+            N.json[plist.data('type')][func](obj, function(r) {
+                var tagTime = me.parent().parent(), timeVal = null;
+                if(id === 'hcid') {
+                    tagTime = tagTime.find('a[id^="ndc"]');
+                    console.log(tagTime);
+                } else {
+                    console.log(me.parent().parent());
+                    tagTime = tagTime.find('time');
+                    console.log(tagTime);
+                }
+                timeVal = tagTime.html();
+
+                tagTime.html(r.datetime);
+                if(!me.parent().find(".newrev").length) {
+                    var s = $(document.createElement("span"));
+                    s.attr("class", "newrev symbols" + (id === 'hcid' ? ' comment' : ''));
+                    s.attr('data-refto', refto);
+                    s.attr('data-'+id, me.data(id));
+                    s.html("");
+                    me.parent().append(s);
+                }
+
+                var div = null, pidTag = null;
+                if(id === 'hcid') {
+                    div = $("#" + refto).find(".nerdz_comments");
+                    pidTag = $(document.createElement("span"));
+                    pidTag.append( div.find(".delcomment") );
+                    pidTag.html(pidTag.html() + "#1");
+                    pidTag.css('font-size','0');
+                } else {
+                    div = $("#" + refto).find(".nerdz_message div:first");
+                    pidTag = $("#" + refto).find(".nerdz_message span:first");
+                    if(!div.length) {
+                        div = $("#" + refto).find(".news div:first");
+                        pidTag = $("#" + refto).find(".news span:first");
+                    }
+
+                    pidTag.remove();
+                }
+
+                var storeName = plist.data('type') + "store" + func;
+
+                var elms = {};                    
+                if(!sessionStorage[storeName]) { //init store
+                    elms[me.data(id)] = [];
+                    elms[me.data(id)][revno] = {};
+                    elms[me.data(id)][revno].message = div.html();
+                    elms[me.data(id)][revno].time = timeVal;
+                    sessionStorage[storeName] = JSON.stringify(elms);
+                } else { // store exists
+                    elms = JSON.parse(sessionStorage[storeName]);
+                    if(!elms[me.data(id)]) {
+                        elms[me.data(id)] = [];
+                    }
+                    if(!elms[me.data(id)][revno]) {
+                        elms[me.data(id)][revno] = {};
+                        elms[me.data(id)][revno].message = div.html();
+                        elms[me.data(id)][revno].time = timeVal;
+                        sessionStorage[storeName] = JSON.stringify(elms);
+                    }
+                }
+
+                div.html(r.message);
+                if(pidTag.html().search(/^#\d+$/) != -1) {
+                    pidTag.html(pidTag.html() + " - rev: " + revno);
+                } else {
+                    pidTag.html(pidTag.html().replace(/(#.+?):\s*(\d+)/, function($0, $1, $2) {
+                        return $1 +": " + revno;
+                    }));
+                }
+                div.prepend(pidTag);
+
+                var rev = revno - 1;
+                me.data('revisions', rev);
+                if(rev === 0) {
+                    me.hide();
+                }
+            });
+        }
+    });
+
+    plist.on('click', '.newrev', function() {
+        var me = $(this), refto = $(this).data('refto');
+
+        var func = "getRevision";
+        var id = 'hpid';
+        var tagTime =  me.parent().parent().find('time');
+
+        if(me.hasClass("comment")) {
+            func = "getCommentRevision";
+            id = 'hcid';
+            tagTime = me.parent().parent().children('a[id^="ndc"]');
+        }
+        var storeName = plist.data('type') + "store" + func;
+
+        if(sessionStorage[storeName]) {
+            var elms = JSON.parse(sessionStorage[storeName]);
+            if(elms[me.data(id)]) {
+
+                if(id === 'hcid') {
+                    div = $("#" + refto).find(".nerdz_comments");
+                    pidTag = $(document.createElement("span"));
+                    pidTag.append( div.find(".delcomment") );
+                    pidTag.html(pidTag.html() + "#1");
+                } else {
+                    div = $("#" + refto).find(".nerdz_message div:first");
+                    if(!div.length) {
+                        div = $("#" + refto).find(".news div:first");
+                    }
+                    pidTag = div.find("span:first");
+                    pidTag.remove();
+                }
+
+                elms[me.data(id)] = elms[me.data(id)].filter(function(v) { return v !== null; });
+                div.html(elms[me.data(id)][0].message);
+                tagTime.html(elms[me.data(id)][0].time);
+                elms[me.data(id)][0] = null;
+                elms[me.data(id)] = elms[me.data(id)].filter(function(v) { return v !== null; });
+                sessionStorage[storeName] = JSON.stringify(elms);
+                //update counter
+                var d = me.parent().find(".oldrev");
+                var rev  = parseInt(d.data('revisions')) + 1;
+                d.data('revisions', rev);
+
+                pidTag.html(pidTag.html().replace(/(#.+?):\s*(\d+)/, function($0, $1, $2) {
+                    return $1 +": " + (rev == 1 ? rev+1 : rev);
+                }));
+
+                if(id === 'hcid') {
+                    pidTag.css('font-size', '0');
+                }
+
+                div.prepend(pidTag);
+                if(rev >= parseInt(d.data('original-rev'))){
+                    me.remove();
+                    pidTag.html(pidTag.html().replace(/(#\d+).*:\s*(\d+)/, function($0, $1, $2) {
+                        return $1;
+                    }));
+                }
+                d.show();
+            }
+        }
+    });
+
     plist.on('click', ".vote", function() {
         var curr = $(this),
           cont = curr.parent(),
@@ -467,47 +616,96 @@ $(document).ready(function() {
         });
     });
 
-    plist.on('click',".editpost",function(e) {
+    plist.on('click',".close", function(e) {
         e.preventDefault();
-        var refto = $('#' + $(this).data('refto')), hpid = $(this).data('hpid');
-        var editlang = $(this).attr('title');
-        var form = function(fid,hpid,message,edlang,prev) {
-                    return     '<form style="margin-bottom:40px" id="' +fid+ '" data-hpid="'+hpid+'">' +
-                               '<textarea id="'+fid+'abc" autofocus style="width:99%; height:125px">' +message+ '</textarea><br />' +
-                               '<input type="submit" value="' + edlang +'" style="float: right; margin-top:5px" />' +
-                                '<button type="button" style="float:right; margin-top: 5px" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
-                               '<button type="button" style="float:left; margin-top:5px" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
-                           '</form>';
-                    };
-            N.json[plist.data('type')].getPost({hpid: hpid},function(d) {
-                 var fid = refto.attr('id') + 'editform';
-                 refto.html(form(fid,hpid,d.message,editlang,$(".preview").html()));
+        var refto = $('#' + $(this).data('refto'));
+        var hpid = $(this).data('hpid');
+        var me = $(this), arrow = me.children();
 
-                 $('#'+fid).on('submit',function(e) {
-                      e.preventDefault();
-                      N.json[plist.data('type')].editPost(
+        
+        N.json[plist.data('type')].closePost({hpid: hpid},function(m) {
+            if(m.status != 'ok') {
+                alert(m.message);
+            } else {
+                refto.css('color','red');
+                me.title= N.getLangData().OPEN;
+                me.attr('class','open symbols nerdzoptions');
+            }
+        });
+    });
+
+    plist.on('click',".open", function(e) {
+        e.preventDefault();
+        var refto = $('#' + $(this).data('refto'));
+        var hpid = $(this).data('hpid');
+        var me = $(this), arrow = me.children();
+
+        
+        N.json[plist.data('type')].openPost({hpid: hpid},function(m) {
+            if(m.status != 'ok') {
+                alert(m.message);
+            } else {
+                refto.css('color','');
+                me.title= N.getLangData().CLOSE;
+                me.attr('class',"close symbols nerdzoptions");
+            }
+        });
+    });
+
+    plist.on('click',".editpost",function(e) {
+       e.preventDefault();
+        var refto = $('#' + $(this).data('refto')), hpid = $(this).data('hpid');
+
+        var getF = "getPost", editF = "editPost";
+        var getObj = {hpid: hpid};
+        var editObj = {hpid: hpid};
+        var id = hpid;
+        var type = 'hpid';
+
+        if($(this).hasClass("comment")) {
+            type = 'hcid';
+            getF = "getComment";
+            editF = "editComment";
+            var hcid =  $(this).data('hcid');
+            getObj = {hcid: hcid };
+            editObj = {hcid: hcid };
+            id = hcid;
+        }
+
+        var form = function(fid,id,message,prev, type) {
+            return  '<form style="margin-bottom:40px" id="' +fid+ '" data-hpid="'+hpid+'">' +
+                        '<textarea id="'+fid+'abc" autofocus style="width:99%; height:125px">' +message+ '</textarea><br />' +
+                        '<input type="submit" value="' + N.getLangData().EDIT +'" style="float: right; margin-top:5px" />' +
+                        '<button type="button" style="float:right; margin-top: 5px" class="preview" data-refto="#'+fid+'abc">'+prev+'</button>'+
+                        '<button type="button" style="float:left; margin-top:5px" onclick="window.open(\'/bbcode.php\')">BBCode</button>' +
+                    '</form>';
+        };
+        N.json[plist.data('type')][getF](getObj,function(d) {
+            var fid = refto.attr('id') + 'editform';
+            refto.html(form(fid,id,d.message,$(".preview").html(), type));
+
+            $('#'+fid).on('submit',function(e) {
+                e.preventDefault();
+                N.json[plist.data('type')][editF]($.extend(editObj, {message: $(this).children('textarea').val()}),
+                        function(d) {
+                            if(d.status == 'ok')
                             {
-                                 hpid: $(this).data('hpid'),
-                                 message: $(this).children('textarea').val()
-                            },function(d)
-                            {
-                                 if(d.status == 'ok')
-                                 {
-                                      refto.slideToggle("slow");
-                                      N.html[plist.data('type')].getPost({hpid: hpid}, function(o) {
-                                            refto.html(o);
-                                            refto.slideToggle("slow");
-                                            if(refto.data("hide").length) {
-                                                $(refto.find("div.small")[0]).prepend('<a class="hide symbols nerdzoptions" data-postid="post'+hpid+'" title= "'+refto.data("hide")+'"></a>');
-                                            }
-                                      });
-                                 }
-                                 else {
-                                      alert(d.message);
-                                 }
-                      });
-                 });
+                                refto.slideToggle("slow");
+                                N.html[plist.data('type')][getF](getObj, function(o) {
+                                    refto.html(o);
+                                    refto.slideToggle("slow");
+                                    if(typeof N.getLangData().HIDE != "undefined") {
+                                        $(refto.find("div.small")[0]).prepend('<a class="hide nerdzoptions symbols" style="float:right; margin-left:3px" data-postid="post'+id+'" title="N.getLangData().HIDE"></a>');
+                                    }
+
+                                });
+                            }
+                            else {
+                                alert(d.message);
+                            }
+                        });
             });
+        });
     });
 
     plist.on('click',".imglocked",function() {
