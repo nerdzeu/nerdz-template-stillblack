@@ -280,19 +280,6 @@
                             });
                         }
                     }
-                    if(sessionStorage.getItem(sl) == "1")
-                    {
-                        sessionStorage.setItem(sl,"0");
-                        N.html.search.specificProfilePostsBeforeHpid(num, $("#footersearch input[name=q]").val(), plist.data('profileid'), hpid, function(data) {
-                            $("#"+divId).remove();
-                            if(data.length > 0) {
-                                plist.append(data);
-                                load = false;
-                                sessionStorage.setItem(sl,"1");
-                                window.fixHeights();
-                            }
-                        });
-                    }
                 }
             });
         });

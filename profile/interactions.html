@@ -1,9 +1,10 @@
 <h1 style="margin-top:0px">{$interactions}</h1>
 <ol class="interactions">
 {loop="list_a"}
-<li class="nerdz_interactions">
-    <span class="nerdz_date" style="float:left">{$value.datetime_n} | </span>&nbsp;
-    {if="$value.type_n == 'blacklist' || $value.type_n == 'followers' || $value.type_n == 'whitelist'"}
+<li class="nerdz_comments">
+    <span class="nerdz_date" style="float:left">{$value.datetime_n}</span>&nbsp;
+    <span class="rightarrow" style="margin-left:11px"></span>&nbsp;
+    {if="$value.type_n == 'blacklist' || $value.type_n == 'followers' || $value.type_n == 'whitelist' || $value.type_n == 'mentions'"}
         {if="$value.type_n == 'blacklist'"}
             {if="$value.fromid_n == $me_n"}
                 {$you_blacklisted_this_user}
@@ -21,6 +22,12 @@
                 {$you_whitelisted_this_user}
             {else}
                 {$you_have_been_whitelisted}
+            {/if}
+        {elseif="$value.type_n == 'mentions'"}
+            {if="$value.fromid_n == $me_n"}
+                {$you_mentioned_this_user}
+            {else}
+                {$you_have_been_mentioned}
             {/if}
         {/if}
     {else}
