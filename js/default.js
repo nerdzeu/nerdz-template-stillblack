@@ -861,6 +861,7 @@ $(document).ready(function() {
         if (nc.innerHTML !== "0" && nc.innerHTML !== "") {
             nt.style.color= "#CC0000";
         } else {
+            nc.style.opacity= 0;
             nt.style.color= "#000";
         }
     }, 200);
@@ -872,6 +873,7 @@ $(document).ready(function() {
         if (pc.innerHTML !== "0" && pc.innerHTML !== "") {
             pl.style.color= "#CC0000";
         } else {
+            pc.style.opacity= 0;
             pl.style.color= "#000";
         }
         
