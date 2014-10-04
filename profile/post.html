@@ -7,7 +7,12 @@
         :
         {/if}
         <span class="nerdz_date">
-          {$datetime_n}
+            <span class="revisions">
+                {if="$revisions_n > 0"}
+                <span title="{$number_of_modifications}: {$revisions_n}" class="oldrev symbols" data-refto="post{$hpid_n}" data-revisions="{$revisions_n}" data-hpid="{$hpid_n}"></span>&nbsp;&nbsp;
+                {/if}
+            </span>
+          <time>{$datetime_n}</time>
           <span class="thumbs separator">|</span>
             <span class='thumbs thumbs-counter{if="$thumbs_n > 0"} nerdz_thumbsNumPos{else}{if="$thumbs_n < 0"} nerdz_thumbsNumNeg{/if}{/if}'>{if="$thumbs_n > 0"}+{/if}{$thumbs_n}</span>
             <div class="thumbs comment nerdz_thumbs" data-refto="{$hpid_n}">
@@ -15,11 +20,14 @@
               <i class='vote up{if="$uthumb_n == 1"} voted{/if} symbols'></i>&nbsp;&nbsp;
               <i class='vote down{if="$uthumb_n ==-1"} voted{/if} symbols'></i>&nbsp;&nbsp;
             </div>
+            {if="$language_n != $mylang_n"}
+                <img src="{$flagdir_n}{$language_n}.png#" alt="{$language_n}" title="{$language_n}" width="18" height="12" />
+            {/if}
         </span>
     </div>
     <div class="{if="$news_b"}news{else}nerdz_message{/if}">
         <div>
-            <span class="nerdz_date" style="font-size: 7pt">
+            <span class="nerdz_date{if="$canremovepost_b || $caneditpost_b || $canclosepost_b"} pid{/if}"{if="$closed_b"} style="color:red; font-size: 7pt" title="{$closed_post}"{else} style="font-size: 7pt"{/if}>
                 #{$pid_n}
             </span>
             {$message_n}
@@ -35,7 +43,9 @@
             {if="$canremovepost_b"}
                 <a class="delpost symbols nerdzoptions" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" title="{$remove}"></a>
             {/if}
-            {if="$canremovepost_b && $caneditpost_b"} | {/if}
+            {if="$canclosepost_b"}
+                    <a class="symbols nerdzoptions {if="$closed_b"}open{else}close{/if}" data-hpid="{$hpid_n}" data-refto="post{$hpid_n} .nerdz_date.pid" title="{if="$closed_b"}{$open}{else}{$close}{/if}"></a>
+            {/if}
             {if="$caneditpost_b"}
                 <a class="editpost symbols nerdzoptions" data-hpid="{$hpid_n}" data-refto="post{$hpid_n}" title="{$edit}"></a>
             {/if}

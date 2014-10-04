@@ -6,15 +6,16 @@
     // CSS section
     "css": {
         "default": "css/default.css",
-        "faq": "css/faq.css"
+        "faq": "css/faq.css",
+        "userslist": "css/userslist.css"
     },
     // JS section
     "js": {
         "default": [ "js/default.js", {
-            "lang": [ "LOADING" ]
+            "lang": [ "LOADING", "EXPAND", "OPEN", "CLOSE", "EDIT" ]
         } ],
         "home": [ "js/home.js", {
-            "lang": [ "HIDDEN_POSTS", "EXPAND" ],
+            "lang": [ "HIDDEN_POSTS", "EXPAND", "HIDE" ],
             "outputVersion": true // you should probably not change this
         } ],
         "preferences": "js/preferences.js",
@@ -25,7 +26,8 @@
         "projectslist": "js/projectslist.js",
         "bookmarks": "js/bookmarks.js",
         "reset": "js/reset.js",
-        "share": "js/share.js"
+        "share": "js/share.js",
+        "search": "js/search.js"
     },
     // LANGS section - accepts only "default": "path/%lang%/path/to/file.json" where %lang% will be replaced with each available language.
     "langs": {

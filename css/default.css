@@ -570,8 +570,8 @@ button:active, input[type=submit]:active, .profilebutton:active {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-    font-size: 150%;
-    padding-top: 7px;
+    font-size: 125%;
+    padding-top: 12px;
     padding-bottom: 3px;
 
 }
@@ -582,8 +582,8 @@ button:active, input[type=submit]:active, .profilebutton:active {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-    font-size: 150%;
-    padding-top: 7px;
+    font-size: 125%;
+    padding-top: 12px;
     padding-bottom: 3px;
 
 }
@@ -604,7 +604,7 @@ button:active, input[type=submit]:active, .profilebutton:active {
 }
 
 #pmcounter, #notifycounter {
-    font-size: 15px;
+    font-size: 13px;
     margin-left: 2px;
     overflow-x:hidden;
 }
@@ -776,6 +776,10 @@ button:active, input[type=submit]:active, .profilebutton:active {
     content: "";
 }
 
+.close:before, .open:before {
+    content: "";
+}
+
 .feed:before {
     content: "";
 }
@@ -819,5 +823,54 @@ button:active, input[type=submit]:active, .profilebutton:active {
 .birthday:before {
     content: "";
 }
+
+.oldrev:before {
+    content: "";
+}
+
+.newrev:before {
+    content: "";
+}
+
 /* end Symbols */
 
+.oldrev, .newrev {
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: -5px;
+    margin-bottom: 3px;
+}
+
+#newscheck {
+    padding-top: 10px;
+    margin-left: 10px;
+    float: left;
+}
+
+#sel-lang {
+    color: #ddd;
+    background-color: #000;
+    margin-top: 10px;
+    float: right;
+    height: 20px;
+    border-radius: 0px;
+    cursor: pointer;
+    width:90px;
+}
+
+.nerdz_interactions {
+    padding-top: 5px;
+    padding-right: 8px;
+    padding-left: 4px;
+    padding-bottom: 6px;
+    background-color: #292929;
+    margin-bottom: 10px;
+    color: #CCC;
+    word-wrap: break-word;
+}
+
+.comment {
+    font-size: 95%;
+    vertical-align: middle;
+    padding-top: 2.5px;
+}

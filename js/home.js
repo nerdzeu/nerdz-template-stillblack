@@ -2,23 +2,11 @@ $(document).ready(function() {
     //tutti gli eventi ajax che evvengono in plist sono nel formato pilst.on(evento,[selettore],function(...){...});
     var plist = $("#postlist");
     var loading = N.getLangData().LOADING;
+    var voteOrder = null; // ^
+    var myLang = $("#stdfrm select[name=lang]").val();
     var lang = null; /* globale dato che la uso anche altrove */
     var load = false; //gestisce i caricamenti ed evita sovrapposizioni. Dichiarata qui che è il foglio che viene incluso di default ovunque e per primo
     plist.html('<h1>'+loading+'...</h1>');
-
-    var fixHeights = function() {
-        plist.find(".nerdz_message").each (function() {
-            var el = $(this).find('div:first');
-            // TODO: switch from attr('data-parsed') to data('parsed')
-            if ((el.height() >= 200 || el.find ('.gistLoad').length > 0) && !el.attr('data-parsed'))
-            {
-                el.data ('real-height', el.height()).addClass ("compressed");
-                var n = el.next();
-                n.prepend ('<p class="more">&gt;&gt; ' + N.getLangData().EXPAND + ' &lt;&lt;</p>'); // Spaces master race.
-            }
-            el.attr('data-parsed','1');
-        });
-    };
 
     var onRemoveHiddenPost = function() {
         var me = $(this), target = me.data ("target"), lv = localStorage.getItem ("hid").split ("|"), serialized = "";
@@ -75,7 +63,60 @@ $(document).ready(function() {
                     $("#hp-cnt ul").html (pids);
             }
         }
-        fixHeights();
+        $("#postlist ").find(".news a:nth-last-child(3)").each(function() {
+            if($.inArray($(this).html(), window.idiots) > -1) {
+                $(this).parent().parent().hide();
+            }
+        });
+        
+        window.fixHeights();
+    };
+
+    var handleRefresh = function() {
+        load = false;
+        if(lang == 'usersifollow')
+        {
+            $("#stdfrm select[name=lang]").val(myLang);
+            $("#fast_nerdz").show();
+            N.html.profile.getFollowedHomePostList(0,function(data) {
+                plist.html(data);
+                plist.data('type','profile');
+                plist.data('mode','followed');
+                hideHidden();
+                load = true;
+            });
+        }
+        else if(lang == 'vote')
+        {
+            $("#fast_nerdz").hide();
+            localStorage.setItem("autoorder", voteOrder);
+            N.html.profile.getByVoteHomePostList(0, voteOrder, function(data) {
+                plist.html(data);
+                plist.data('type','profile');
+                plist.data('mode','vote');
+                hideHidden();
+                load = true;
+            });
+        }
+        else
+        {
+            $("#fast_nerdz").show();
+            if(lang != '*') {
+                $("#stdfrm select[name=lang]").val(lang);
+                $("#stdfrm ul.subnav").show();
+            } else {
+                $("#stdfrm select[name=lang]").val(myLang);
+            }
+
+            load = false;
+            N.html.profile.getByLangHomePostList(0,lang,function(data) {
+                plist.html(data);
+                plist.data('mode','language');
+                plist.data('type','profile');
+                hideHidden();
+                load = true;
+            });
+        }
     };
 
 
@@ -129,6 +170,7 @@ $(document).ready(function() {
         $("#nerdzlist").hide();
         $(".selectlang").css('color','');
         localStorage.removeItem("autolang");
+        localStorage.removeItem("autoorder");
         load = false;
         N.html.profile.getHomePostList(0,function(data) {
             plist.html(data);
@@ -165,39 +207,14 @@ $(document).ready(function() {
     $(".selectlang").on('click',function() {
         plist.html('<h1>'+loading+'...</h1>');
         lang = $(this).data('lang');
+        if(lang == 'vote') {
+            voteOrder = $(this).data('order');
+        }
         localStorage.setItem("autolang",lang);
+        localStorage.removeItem("autoorder");
         $(".selectlang").css('color','');
         $(this).css('color','#2370B6');
-        load = false;
-        if(lang == 'usersifollow')
-        {
-            $("#fast_nerdz").show();
-            N.html.profile.getFollowedHomePostList(0,function(data) {
-                plist.html(data);
-                plist.data('type','profile');
-                plist.data('mode','followed');
-                hideHidden();
-                load = true;
-            });
-        }
-        else
-        {
-            if(lang == '*') {
-                $("#fast_nerdz").show();
-            }
-            else {
-                $("#fast_nerdz").hide();
-            }
-
-            load = false;
-            N.html.profile.getByLangHomePostList(0,lang,function(data) {
-                plist.html(data);
-                plist.data('mode','language');
-                plist.data('type','profile');
-                hideHidden();
-                load = true;
-            });
-        }
+        handleRefresh();
     });
 
     $(".projlang").on('click',function() {
@@ -217,6 +234,18 @@ $(document).ready(function() {
                 load = true;
             });
         }
+        else if(lang == 'vote')
+        {
+            $("#fast_nerdz").hide();
+            voteOrder = $(this).data('order');
+            N.html.project.getByVoteHomePostList(0, voteOrder, function(data) {
+                plist.html(data);
+                plist.data('type','project');
+                plist.data('mode','vote');
+                hideHidden();
+                load = true;
+            });
+        }
         else
         {
             N.html.project.getByLangHomePostList(0,lang,function(data) {
@@ -231,47 +260,37 @@ $(document).ready(function() {
     
     $("#stdfrm").on('submit',function(e) {
         e.preventDefault();
+        $(this).find('ul.subnav').hide();
         $("#pmessage").html(loading+'...');
-        N.json.profile.newPost({message: $("#frmtxt").val(), to: 0 },function(data) {
+        var news  = $("#sendnews");
+        N.json.profile.newPost({
+            message: $("#frmtxt").val(),
+            to: 0,
+            news: news.length && news.is(':checked') ? '1' : '0',
+            language: $(this).find('[name="lang"]').val()
+        },function(data) {
             if(data.status == 'ok') {
                 $("#frmtxt").val('');
-                load = false;
-                if(lang == '*') {
-                    N.html.profile.getByLangHomePostList(0,lang,function(data) {
-                        plist.html(data);
-                        plist.data('type','profile');
-                        plist.data('mode','language');
-                        hideHidden();
-                        load = true;
-                    });
-                }
-                else if(lang == 'usersifollow') {
-                    N.html.profile.getFollowedHomePostList(0,function(data) {
-                        plist.html(data);
-                        plist.data('type','profile');
-                        plist.data('mode','followed');
-                        hideHidden();
-                        load = true;
-                    });
-                }
-                else {
-                    $("#profilePostList").click();
-                }
+                handleRefresh();
             }
             
             $("#pmessage").html(data.message);
 
-            setTimeout(function() {
-                        $("#pmessage").html('');
-                        },5000);
+            setTimeout(function() { $("#pmessage").html(''); },5000);
         });
     });
+
 
     //default profile posts
     if(localStorage.getItem("autolang"))
     {
-        $("#nerdzselect").click();
-        var el = $("#nerdzlist").find("ul").find("[data-lang='"+localStorage.getItem("autolang")+"']");
+        var el;
+        if(localStorage.getItem("autoorder")) {
+            el = $("#nerdzvote").find("[data-order='"+localStorage.getItem("autoorder")+"']");
+        } else {
+            $("#nerdzselect").click();
+            el = $("#nerdzlist").find("ul").find("[data-lang='"+localStorage.getItem("autolang")+"']");
+        }
         el.click();
         el.css('color','#2370B6');
     }
