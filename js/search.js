@@ -37,7 +37,7 @@ $(document).ready(function() {
     // thus we must change the type according to the selected post
     // best hack btw
     plist.on('mouseenter focus', "div[id^='post']", function(e) {
-        plist.data('type', /\.(\d+)$/i.test($(this).find('a.post_link').attr('href')) ? 'profile' : 'project');
+        plist.data('type', /\.(\d+)$/i.test($(this).find('a.Link').attr('href')) ? 'profile' : 'project');
     });
 
     plist.on("mouseleave focusout", "div[id^='post']", function(e) {

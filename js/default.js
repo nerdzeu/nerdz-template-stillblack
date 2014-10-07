@@ -15,6 +15,21 @@ $(document).ready(function() {
         $('#bugs').slideToggle();        
     });
 
+    window.fixHeights = function() {
+        plist.find(".nerdz_message").each (function() {
+            var el = $(this).find('div:first');
+            // TODO: switch from attr('data-parsed') to data('parsed')
+            if ((el.height() >= 200 || el.find ('.gistLoad').length > 0) && !el.attr('data-parsed'))
+            {
+                el.data ('real-height', el.height()).addClass ("compressed");
+                var n = el.next();
+                n.prepend ('<p class="more">&gt;&gt; ' + N.getLangData().EXPAND + ' &lt;&lt;</p>'); // Spaces master race.
+            }
+            el.attr('data-parsed','1');
+        });
+    };
+
+
     var _h = $("head");
     var append_theme = "?skin=sunburst";
     var prettify = document.createElement ("script");
@@ -846,6 +861,7 @@ $(document).ready(function() {
         if (nc.innerHTML !== "0" && nc.innerHTML !== "") {
             nt.style.color= "#CC0000";
         } else {
+            nc.style.opacity= 0;
             nt.style.color= "#000";
         }
     }, 200);
@@ -857,6 +873,7 @@ $(document).ready(function() {
         if (pc.innerHTML !== "0" && pc.innerHTML !== "") {
             pl.style.color= "#CC0000";
         } else {
+            pc.style.opacity= 0;
             pl.style.color= "#000";
         }
         
