@@ -70,10 +70,10 @@ hr {
 
 #right_col
 {
-    width: 12.5%;
-    float: left;
+    width: 13.5%;
+    float: right;
+    margin-right: 1%;
     display: inline;
-    margin-left: 1%;
 }
 
 #left_col ul, #right_col ul
@@ -107,6 +107,31 @@ hr {
     bottom: 2px;
     left: 2px;
     text-align: left;
+}
+
+.follow-list-home {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.follow-list-item-home {
+    float:left;
+    height: 36px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+.gravatar-home {
+    float: left;
+}
+
+.follow-list-container-home {
+    margin-left: 38px;
+}
+
+.follow-list-title-home {
+    vertical-align: -.3em;
 }
 
 .nerdz_message > div.compressed
@@ -163,7 +188,7 @@ hr {
 #main
 {
     margin: auto;
-    width: 98%;
+    width: 99%;
     margin-right: 0.2%;
     word-wrap: break-word;
 }

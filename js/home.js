@@ -204,6 +204,14 @@ $(document).ready(function() {
         $("#projlist").toggle();
     });
 
+    $("#userselect").on('click',function() {
+        $("#userlist").toggle();
+    });
+
+    $("#infoselect").on('click',function() {
+        $("#infolist").toggle();
+    });
+
     $(".selectlang").on('click',function() {
         plist.html('<h1>'+loading+'...</h1>');
         lang = $(this).data('lang');

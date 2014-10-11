@@ -7,7 +7,7 @@
             <div id="infobox" class="box">
                     Commit: <span id="commit"></span> <br>
                     <a href="/informations.php">More info..</a>
-            </div><br />
+            </div>
             <div id="leftmenu" class="light-text">
                 <ul style="color: #AFAFAF">
                     <li><a id="profilePostList" href="#">NERDZ</a>
@@ -25,13 +25,11 @@
                                 {loop="langs_a"}
                                 <li class="selectlang" data-lang="{$value.shortlang_n}">{$value.longlang_n}</li>
                                 {/loop}
+                                <li class="selectlang" data-lang="vote" data-order="+">{$top_rated}</li>
+                            	<li class="selectlang" data-lang="vote" data-order="-">{$less_rated}</li>
                             </ul>
                             <br />
                         </div>
-                        <ul style="margin-left:15px" class="small" id="nerdzvote">
-                            <li class="selectlang" data-lang="vote" data-order="+">{$top_rated}</li>
-                            <li class="selectlang" data-lang="vote" data-order="-">{$less_rated}</li>
-                        </ul>
                     </li>
                     <li><a id="projectPostList" href="#">{$projects}</a>
                         <span style="float:right">
@@ -48,33 +46,56 @@
                                 {loop="langs_a"}
                                 <li class="projlang" data-lang="{$value.shortlang_n}">{$value.longlang_n}</li>
                                 {/loop}
+                                <li class="projlang" data-lang="vote" data-order="+">{$top_rated}</li>
+                            	<li class="projlang" data-lang="vote" data-order="-">{$less_rated}</li>
                             </ul>
                             <br />
                         </div>
-                        <ul style="margin-left:15px" class="small">
-                            <li class="projlang" data-lang="vote" data-order="+">{$top_rated}</li>
-                            <li class="projlang" data-lang="vote" data-order="-">{$less_rated}</li>
-                        </ul>
-                        <br />
-                        
+                        <br />                        
                     </li>
-                    <li><a href="/userslist.php">{$users_list}</a>
+                    <li><a href="/userslist.php">{$users_list}</a>:
                     <br />
-                        <ul style="margin-left:20px">
+                    <span class="small" style="margin-left:15px; cursor:pointer" id="userselect">[{$from}...]</span>
+                    <div id="userlist" style="display: none; margin-left: 20px">
+                        <ul class="userlist" style="margin-left:20px">
                             <li><a href="/deleted.php" class="small">{$deleted}</a></li>
                             <li><a href="/banned.php" class="small">{$banned}</a></li>
-                        </ul></li>
-                    <li><a href="/projectslist.php">{$projects_list}</a><br /><br /></li>
+                        </ul>
+                    </div>
+                    </li>
+                    <li><a href="/projectslist.php">{$projects_list}</a><br /></li>
                     <li><a href="/bookmarks.php">{$bookmarks} [{$users}]</a></li>
-                    <li><a href="/bookmarks.php?project=1">{$bookmarks} [{$projects}]</a><br /><br /></li>
-                    <li><a href="/rank.php">Top 100</a></li>
-                    <li><a href="/rank.php?top=thismonth">Monthly 100</a><br /><br /></li>
-                    <li><a href="/last.php">{$last_user}</a></li>
-                    <li><a href="/stats.php">{$stats}</a></li>
-                    <li><a href="/faq.php">F.A.Q.</a></li>
+                    <li><a href="/bookmarks.php?project=1">{$bookmarks} [{$projects}]</a> <br /></li>
+					
+					<li><a href="/informations.php">{$informations}</a>
+                    <br />
+                    <span class="small" style="margin-left:15px; cursor:pointer" id="infoselect">[{$from}...]</span>
+                    <div id="infolist" style="display:none; margin-left:20px">
+                    	<ul>
+                    		<li><a href="/rank.php">Top 100</a></li>
+                    		<li><a href="/rank.php?top=thismonth">Monthly 100</a></li>
+                    		<li><a href="/last.php">{$last_user}</a></li>
+                    		<li><a href="/stats.php">{$stats}</a></li>
+                    		<li><a href="/faq.php">F.A.Q.</a></li>
+                    	</ul>
+                    </div>
                 </ul><br />
             </div>
         </div>
+
+        <div class="title">{$newest_trends}</div>
+        <ol style="padding:0; list-style-type: none">
+        {loop="newest_a"}
+            <li style="line-height:20px"><a href="/search.php?q={$value.trend4link_n}">{$value.trend_n}</a></li>
+        {/loop}
+        </ol>
+        <div class="title">{$most_popular_trends}</div>
+        <ol style="padding:0; list-style-type: none">
+        {loop="popular_a"}
+            <li style="line-height:20px"><a href="/search.php?q={$value.trend4link_n}">{$value.trend_n}</a></li>
+        {/loop}
+        </ol>
+
         <div class="title" id="bug_title" style="cursor:pointer">{$bug_title}</div>
             <div class="box" id="bugs" style="text-align:center; display: none">
                 <a href="/NERDZilla:">Nerdz bug</a> <br>
@@ -102,22 +123,29 @@
     </article>
     <aside id="right_col" class="page">
     {if="!empty($followed_a)"}
-        <div style="width:99%" class="title">
-            {$you_follow}
-            <div style="font-style: italic" class="small">[{$followedonlinetot_n}/{$followedtot_n}]</div>
+        <div class="title" style="overflow:hidden">
+            <span style="vertical-align:middle">{$you_follow}</span><br />
+            <span style="font-style: italic;vertical-align:middle" class="small">[{$followedonlinetot_n}/{$followedtot_n}]</span>
         </div>
         <br />
         <div id="rightmenu">
-            <ul id="followedlist" style="color: #AFAFAF">
+            <ol class="follow-list-home">
             {loop="followed_a"}
-                <li>
-                    <a href="/{$value.username4link_n}" {if="!$value.online_b"} style="color: #AFAFAF"{/if}>{$value.username_n}</a>
-                    {if="$value.birthday_b"}
-                        <span alt="gift" class="symbols birthday" style="float: right; margin-right: 5px; border: 0px; font-size: 16px; color: #ddd" ></span>
-                    {/if}
+                <li class="follow-list-item-home" {if="!$counter1"}style="margin-top:0"{/if}>
+                    <a href="/{$value.username4link_n}">
+                        <img alt="{$value.username_n}" class="gravatar-home" src="{$value.gravatarurl_n}&amp;s=32#" height="32" width="32">
+                    </a>
+                    <div class="follow-list-container-home">
+                        <a href="/{$value.username4link_n}" class="follow-list-title-home"{if="!$value.online_b"}style="color: #AFAFAF"{/if}>
+                            {$value.username_n}
+                        </a>
+                        {if="$value.birthday_b"}
+                        	<span alt="Birthday" class="symbols birthday" style="float: right; margin-right: 5px; border: 0px; font-size: 16px; color: #ddd" ></span>
+                    	{/if}
+                    </div>
                 </li>
             {/loop}
-            </ul>
+            </ol>
         </div>
         <br />
     {/if}
