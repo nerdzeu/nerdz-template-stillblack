@@ -64,7 +64,7 @@ $(document).ready(function() {
             }
         }
         $("#postlist ").find(".news a:nth-last-child(3)").each(function() {
-            if($.inArray($(this).html(), window.idiots) > -1) {
+            if($.inArray($(this).html(), N.idiots) > -1) {
                 $(this).parent().parent().hide();
             }
         });
