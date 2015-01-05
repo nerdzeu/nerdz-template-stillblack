@@ -1,3 +1,22 @@
+if ( !String.prototype.autoLink ) {
+    String.prototype.autoLink = function ( ) {
+        var str = this,
+            pattern = /(?!\[(?:img|url|code|gist|yt|youtube|noparse|video|music)[^\]]*?\])(^|\s+)((((ht|f)tps?:\/\/)|[www])([a-z\-0-9]+\.)*[\-\w]+(\.[a-z]{2,4})+(\/[\+%:\w\_\-\?\=\#&\.\(\)]*)*(?![a-z]))(?![^\[]*?\[\/(img|url|code|gist|yt|youtube|noparse|video|music)\])/gi,
+            urls = [ ];
+        try {
+            urls = decodeURIComponent( this.replace( /%([^\d].)/g, "%25$1" ) ).match( pattern );
+        } catch ( e ) {}
+        for ( var i in urls ) {
+            if ( urls[ i ].match( /\.(png|gif|jpg|jpeg)$/ ) ) {
+                str = str.replace( urls[ i ], '[img]' + ( urls[ i ].match( /(^|\s+)https?:\/\// ) ? '' : 'http://' ) + urls[ i ] + '[/img]' );
+            } else if ( urls[ i ].match( /youtu\.?be|vimeo\.com|dai\.?ly(motion)?/ ) && !urls[ i ].match( /playlist/ ) ) {
+                str = str.replace( urls[ i ], '[video]' + $.trim( urls[ i ] ) + '[/video]' );
+            }
+        }
+        return str.replace( pattern, '$1[url]$2[/url]' ).replace( /\[(\/)?noparse\]/gi, '' );
+    };
+}
+
 $(document).ready(function() {
     var loading = N.getLangData().LOADING;
     $("iframe").attr('scrolling','no');
@@ -199,20 +218,22 @@ $(document).ready(function() {
         }
     });
 
-    $("#stdfrm").children("input[type=submit]").on("click", function () {
-        $(this).parent().children("textarea").val($(this).parent().children("textarea").val().autoLink());
-    });
+    var autoLink = function(form) {
+        $(form).find('textarea').each(function(index, textarea) {
+            textarea.value = textarea.value.autoLink();
+        });
+    };
+
+    $( 'form' ).bind('submit', function(e) { autoLink(this); });
 
     //begin plist into events (common to: homepage, projects, profiles)
     var plist = $("#postlist");
 
+    plist.on('submit', 'form', function(e) { autoLink(this); });
+
     plist.on('click', ".yt_frame", function(e) {
         e.preventDefault();
         N.yt($(this), $(this).data("vid"));
-    });
-
-    plist.on('click', ".frmcomment", function () {
-        $(this).children("textarea").val($(this).children("textarea").val().autoLink());
     });
 
     plist.on('click','.preview',function(){
@@ -879,26 +900,3 @@ $(document).ready(function() {
         
     }, 200);
 });
-
-//URL detection, thanks to DrJest for these functions
-
-REformat = function(str) {
-  return new RegExp('(?!\\[(?:img|url|code|gist|yt|youtube|noparse)[^\\]]*?\\])' + str + '(?![^\\[]*?\\[\\/(img|url|code|gist|yt|youtube|noparse)\\])', 'gi');
-};
-
-if (!String.prototype.autoLink) {
-  String.prototype.autoLink = function() {
-    str = this;
-    var pattern = REformat('(^|\\s+)((((ht|f)tps?:\\/\\/)|[www])([a-z\\-0-9]+\\.)*[\\-\\w]+(\\.[a-z]{2,4})+(\\/[+%:\\w\\_\\-\\?\\=\\#&\\.\\(\\)]*)*(?![a-z]))');
-    urls = this.match(pattern);
-    for (var i in urls) {
-      if (urls[i].match(/\.(png|gif|jpg|jpeg)$/))
-        str = str.replace(urls[i], '[img]' + (urls[i].match(/(^|\s+)https?:\/\//) ? '' : 'http://') + urls[i] + '[/img]');
-      if (urls[i].match(/youtube\.com|https?:\/\/youtu\.be/) && !urls[i].match(/playlist/))
-        str = str.replace(urls[i], '[yt]' + $.trim(urls[i]) + '[/yt]');
-    }
-    return str.replace(pattern, '$1[url]$2[/url]').replace(/\[(\/)?noparse\]/gi, '').replace(REformat('<3'), '\u2665');
-  };
-}
-
-// End of url detection
