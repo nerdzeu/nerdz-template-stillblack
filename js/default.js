@@ -34,6 +34,18 @@ $(document).ready(function() {
         $('#bugs').slideToggle();        
     });
 
+    $(window).on('beforeunload', function() {
+        if (!$("#postlist").length) return;
+        var areas = $('textarea');
+        for (var ta in areas) {
+            var val = $.trim(areas[ta].value) || '';
+            if (val !== '') {
+                areas[ta].focus();
+                return N.getLangData().MESSAGE_NOT_SENT;
+            }
+        }
+    });
+
     window.fixHeights = function() {
         plist.find(".nerdz_message").each (function() {
             var el = $(this).find('div:first');
@@ -459,6 +471,51 @@ $(document).ready(function() {
                 }
             });
         }
+    });
+
+     $("#mediacrush-file").on("change", function(e) {
+        e.preventDefault();
+        var $me = $(this), progress = $("#" + $me.data("progref"));
+        MediaCrush.upload(document.getElementById("mediacrush-file").files[0], function(media) {
+            var file = document.getElementById("mediacrush-file").files[0];
+            var ext = file.name.split(".").pop();
+            var tag = "video";
+            if (file.type.indexOf("image") > -1 && ext != "gif") {
+                tag = "img";
+            } else {
+                if (file.type.indexOf("audio") > -1) {
+                    tag = "music";
+                }
+            }
+            var $area = $("#" + $me.data("refto"));
+            $("#" + $me.data("progref")).css("width", "0%");
+            var msg = "[" + tag + "]https://media.nerdz.eu/" + media.hash + "." + ext + "[/" + tag + "]";
+            var cpos = $area[0].selectionStart, val = $area.val(), intx = val.substring(0, cpos) + msg;
+            $area.focus();
+            $area.val(intx + val.substring(cpos));
+            $area[0].setSelectionRange(intx.length, intx.length);
+            $me.val("");
+            progress.remove();
+        }, function(e) {
+            if (e.lengthComputable) {
+                progress.css("width", e.loaded / e.total * 100 + "%");
+            }
+        });
+    });
+    var handleUpload = function(me, e) {
+        e.preventDefault();
+        var progref = "ref" + Math.round(Math.random() * 100) + "pro";
+        var refto = me.parent().parent().find("textarea").attr("id");
+        me.parent().parent().append("<div id='" + progref + "' style='background-color:#3d3dff; margin-top: 40px; height: 2px; width:0%'></div>");
+        $("#mediacrush-file").data("progref", progref).data("refto", refto).click();
+    };
+
+    $(".mediacrush-upload").on("click", function(e) {
+        handleUpload($(this), e);
+    });
+
+    plist.on("click", ".mediacrush-upload", function(e) {
+        handleUpload($(this), e);
     });
 
     plist.on('click', '.newrev', function() {

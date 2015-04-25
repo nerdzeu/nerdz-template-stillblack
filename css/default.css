@@ -899,3 +899,9 @@ button:active, input[type=submit]:active, .profilebutton:active {
     vertical-align: middle;
     padding-top: 2.5px;
 }
+
+.mediacrush-upload {
+    float: left;
+    margin-left: 10px;
+    margin-top: 0.75em;
+}
